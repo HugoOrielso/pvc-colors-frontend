@@ -20,10 +20,10 @@ RUN corepack enable && corepack prepare pnpm@10.15.0 --activate
 WORKDIR /app
 
 ARG NEXT_PUBLIC_API_URL
-
-ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
+
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
