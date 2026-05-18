@@ -2,36 +2,36 @@
 FROM node:22-alpine AS deps
 
 RUN apk add --no-cache libc6-compat
+RUN corepack enable && corepack prepare pnpm@10.15.0 --activate
 
 WORKDIR /app
 
-COPY package.json yarn.lock ./
+COPY package.json pnpm-lock.yaml ./
 
-RUN yarn install --frozen-lockfile
+RUN pnpm install --frozen-lockfile
 
 
 # ─── Stage 2: Builder ────────────────────────────────────────────────────────
 FROM node:22-alpine AS builder
 
 RUN apk add --no-cache libc6-compat
+RUN corepack enable && corepack prepare pnpm@10.15.0 --activate
 
 WORKDIR /app
 
-ARG NEXTAUTH_URL
-ARG BUILD_ID
+ARG NEXT_PUBLIC_API_URL
 
-ENV NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
-ENV BUILD_ID=${BUILD_ID}
+ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-RUN yarn build
+RUN pnpm build
 
 
-# ─── Stage 3: Runner (producción) ────────────────────────────────────────────
+# ─── Stage 3: Runner ─────────────────────────────────────────────────────────
 FROM node:22-alpine AS runner
 
 RUN apk add --no-cache libc6-compat
