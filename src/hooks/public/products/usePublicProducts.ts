@@ -6,7 +6,7 @@ export const useProductByIdPublic = (id: string) => {
     queryKey: ["public-product", id],
     queryFn: async () => {
       const response = await fetchProductById(id);
-      return response.data;
+      return response;
     },
     enabled: Boolean(id),
     staleTime: 1000 * 60 * 5,

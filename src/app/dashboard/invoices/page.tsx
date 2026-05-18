@@ -1,7 +1,7 @@
 "use client"
 import { InvoicesDataTable } from "@/components/invoices/dataTable";
 import { invoiceColums } from "@/components/invoices/columns";
-import { getInvoices } from "@/services/getInvoices";
+// import { getInvoices } from "@/services/getInvoices";
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -19,29 +19,29 @@ export default function FacturasPage() {
         ).length,
     };
 
-    useEffect(() => {
-        const loadInvoices = async () => {
-            try {
-                setLoading(true);
-                setError(null);
+    // useEffect(() => {
+    //     const loadInvoices = async () => {
+    //         try {
+    //             setLoading(true);
+    //             setError(null);
 
-                const response = await getInvoices();
+    //             // const response = await getInvoices();
 
-                if (!response?.ok || !Array.isArray(response.data)) {
-                    throw new Error("Respuesta inválida al cargar facturas");
-                }
+    //             if (!response?.ok || !Array.isArray(response.data)) {
+    //                 throw new Error("Respuesta inválida al cargar facturas");
+    //             }
 
-                setInvoices(response.data);
-            } catch (err) {
-                console.error(err);
-                setError("No se pudieron cargar las facturas.");
-            } finally {
-                setLoading(false);
-            }
-        };
+    //             setInvoices(response.data);
+    //         } catch (err) {
+    //             console.error(err);
+    //             setError("No se pudieron cargar las facturas.");
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
 
-        loadInvoices();
-    }, []);
+    //     loadInvoices();
+    // }, []);
 
     return (
         <div className="space-y-6 p-3">

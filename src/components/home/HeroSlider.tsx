@@ -157,7 +157,7 @@ export const HeroSlider = () => {
               >
                 Ver Productos
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                  <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </Link>
               <Link
@@ -271,9 +271,9 @@ export const HeroSlider = () => {
       <div
         className="h-1.5 w-full"
         style={{
-          background: `linear-gradient(90deg, #08206b, ${slide.accent}, #f5c518, #e84393, #08206b)`,
+          backgroundImage: `linear-gradient(90deg, #08206b, ${slide.accent}, #f5c518, #e84393, #08206b)`,
           backgroundSize: "200% 100%",
-          transition: "background 0.6s ease",
+          transition: "background-image 0.6s ease",
         }}
       />
     </section>

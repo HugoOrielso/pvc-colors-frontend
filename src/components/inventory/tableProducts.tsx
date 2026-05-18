@@ -6,7 +6,7 @@ import { useMemo, useState } from "react";
 type DataTableProps<TData extends { name?: string }> = {
   columns: ColumnDef<TData>[];
   data: TData[];
-  lines?: ProductListItem[];
+  lines?: ProductLine[];
   selectedLineId?: string;
   onLineChange?: (lineId: string) => void;
   filterPlaceholder?: string;
