@@ -24,7 +24,7 @@ const nextConfig: NextConfig = {
         source: "/api/:path*",
         destination:
           process.env.NODE_ENV === "production" && apiUrl
-            ? `${apiUrl}/api/:path*`
+            ? `${apiUrl}/:path*`
             : "http://localhost:4000/api/:path*",
       },
     ];
