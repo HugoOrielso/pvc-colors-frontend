@@ -102,7 +102,7 @@ export default function AboutPage() {
         ══════════════════════════════════ */}
         <section className="bg-[#061540] text-white relative overflow-hidden">
           {/* glow blobs */}
-          <div className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-blue-700/20 blur-3xl pointer-events-none" />
+          <div className="absolute -top-32 -left-32 w-125 h-125 rounded-full bg-blue-700/20 blur-3xl pointer-events-none" />
           <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-blue-500/10 blur-3xl pointer-events-none" />
 
           <div className="relative max-w-7xl mx-auto px-6 lg:px-12 py-20 grid lg:grid-cols-2 gap-14 items-center">
@@ -167,7 +167,7 @@ export default function AboutPage() {
                   alt="Equipo PVC Colors"
                   width={700}
                   height={500}
-                  className="w-full h-[340px] lg:h-[400px] object-cover"
+                  className="w-full h-85 lg:h-100 object-cover"
                 />
                 <div className="absolute top-4 left-4 bg-white/10 backdrop-blur border border-white/20 rounded-xl px-4 py-2 flex items-center gap-2">
                   <MapPin size={13} className="text-[#f0c040]" />
@@ -294,7 +294,7 @@ export default function AboutPage() {
                 alt="Misión PVC Colors"
                 width={700}
                 height={500}
-                className="relative rounded-2xl w-full h-[340px] object-cover shadow-xl"
+                className="relative rounded-2xl w-full h-85 object-cover shadow-xl"
               />
               <div className="absolute -bottom-5 -right-5 bg-[#061540] text-white rounded-2xl px-5 py-4 shadow-2xl">
                 <p className="text-2xl font-extrabold text-[#f0c040]">Misión</p>
@@ -390,7 +390,7 @@ export default function AboutPage() {
                 alt="Visión PVC Colors"
                 width={700}
                 height={500}
-                className="relative rounded-2xl w-full h-[380px] object-cover shadow-2xl border border-white/10"
+                className="relative rounded-2xl w-full h-95 object-cover shadow-2xl border border-white/10"
               />
               <div className="absolute -bottom-5 -left-5 bg-[#f0c040] text-[#061540] rounded-2xl px-5 py-4 shadow-2xl">
                 <p className="text-2xl font-extrabold">Visión</p>

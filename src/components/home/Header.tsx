@@ -1,69 +1,122 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import { Calculator, Menu, MonitorCog, X } from "lucide-react";
 
 export const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   const navItems = [
     { label: "Nosotros", href: "/about" },
-    { label: "Dudas", href: "#" },
-    { label: "Líneas", href: "#" },
-    { label: "Aprende con PVC", href: "#" },
-    { label: "Distribuidores", href: "#" },
+    { label: "Líneas", href: "/lines" },
+    { label: "Aprende con PVC", href: "/learn" },
+    { label: "Distribuidores", href: "/distributors" },
   ];
 
+  const closeMenu = () => setIsOpen(false);
+
   return (
-    <header style={{ viewTransitionName: 'site-header' }} className="w-full bg-white border-b border-slate-100 sticky top-0 z-50 shadow-sm">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
+    <header
+      style={{ viewTransitionName: "site-header" }}
+      className="sticky top-0 z-50 w-full border-b border-slate-100 bg-white shadow-sm"
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        <Link href="/" onClick={closeMenu} className="flex items-center gap-3">
           <Image
             src="/assets/logo.webp"
             alt="PVC Color's"
             width={80}
             height={55}
-            className="object-contain ml-1"
+            className="object-contain"
+            priority
           />
         </Link>
 
-        {/* Nav */}
-        <nav className="hidden items-center gap-7 md:flex">
+        <nav className="hidden items-center gap-7 lg:flex">
           {navItems.map((item) => (
             <Link
               key={item.label}
               href={item.href}
-              className="text-[13px] font-semibold text-slate-500 hover:text-[#08206b] transition-colors duration-200 tracking-wide"
+              className="text-[13px] font-semibold tracking-wide text-slate-500 transition-colors duration-200 hover:text-[#08206b]"
             >
               {item.label}
             </Link>
           ))}
         </nav>
 
-        {/* CTA */}
-        <Link
-          href="#"
-          className="hidden md:flex items-center gap-2 bg-[#08206b] hover:bg-[#0a2d96] text-white text-[13px] font-bold px-5 py-2.5 rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#08206b]/25"
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="2" y="3" width="20" height="14" rx="2"/>
-            <path d="M8 21h8M12 17v4"/>
-          </svg>
-          Calculadora
-        </Link>
+        <div className="hidden items-center gap-3 lg:flex">
+          <Link
+            href="/calculator"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#08206b] px-5 py-2.5 text-[13px] font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0a2d96] hover:shadow-lg hover:shadow-[#08206b]/25"
+          >
+            <Calculator size={15} />
+            Calculadora
+          </Link>
 
-        {/* Mobile menu btn */}
-        <button className="md:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#08206b" strokeWidth="2.5" strokeLinecap="round">
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <line x1="3" y1="12" x2="21" y2="12"/>
-            <line x1="3" y1="18" x2="21" y2="18"/>
-          </svg>
+          <Link
+            href="/login"
+            className="inline-flex items-center gap-2 rounded-xl border border-[#08206b]/15 bg-white px-5 py-2.5 text-[13px] font-bold text-[#08206b] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#08206b] hover:bg-[#f8fafc] hover:shadow-lg"
+          >
+            <MonitorCog size={15} />
+            Portal administrativo
+          </Link>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setIsOpen((prev) => !prev)}
+          className="inline-flex items-center justify-center rounded-xl p-2 text-[#08206b] transition-colors hover:bg-slate-100 lg:hidden"
+          aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
+          aria-expanded={isOpen}
+        >
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Color accent strip */}
+      {isOpen && (
+        <div className="border-t border-slate-100 bg-white px-4 py-4 shadow-lg lg:hidden">
+          <nav className="mx-auto flex max-w-7xl flex-col gap-2">
+            {navItems.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={closeMenu}
+                className="rounded-xl px-4 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-[#08206b]"
+              >
+                {item.label}
+              </Link>
+            ))}
+
+            <div className="mt-3 grid gap-3 border-t border-slate-100 pt-4 sm:grid-cols-2">
+              <Link
+                href="/calculator"
+                onClick={closeMenu}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#08206b] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#0a2d96]"
+              >
+                <Calculator size={16} />
+                Calculadora
+              </Link>
+
+              <Link
+                href="/login"
+                onClick={closeMenu}
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#08206b]/15 bg-white px-5 py-3 text-sm font-bold text-[#08206b] transition hover:border-[#08206b] hover:bg-slate-50"
+              >
+                <MonitorCog size={16} />
+                Portal administrativo
+              </Link>
+            </div>
+          </nav>
+        </div>
+      )}
+
       <div
         className="h-0.75 w-full"
         style={{
-          background: "linear-gradient(90deg, #08206b 0%, #7ec8e3 35%, #f5c518 55%, #e84393 75%, #08206b 100%)",
+          background:
+            "linear-gradient(90deg, #08206b 0%, #7ec8e3 35%, #f5c518 55%, #e84393 75%, #08206b 100%)",
         }}
       />
     </header>
