@@ -99,3 +99,10 @@ interface ProductImage {
   createdAt: string;
   updatedAt: string;
 }
+
+interface UpdateProductLinePayload {
+  slug: string;
+  name: string;
+  description: string;
+  image?: File | null;
+};

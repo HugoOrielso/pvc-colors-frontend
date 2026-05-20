@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react";
 
 import { Header } from "@/components/home/Header";
 import { Footer } from "@/components/home/Footer";
+import { AnimatePresence, motion } from "framer-motion"
 
 const aprendeItems = [
   {
@@ -359,55 +360,6 @@ export default function AprendeConPvcPage() {
     <>
       <Header />
 
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-
-        .pvc-page,
-        .pvc-page * {
-          font-family: 'Poppins', sans-serif !important;
-        }
-
-        @keyframes fadeUp {
-          from {
-            opacity: 0;
-            transform: translateY(22px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .fade-up {
-          animation: fadeUp 0.65s ease both;
-        }
-
-        .delay-1 {
-          animation-delay: 0.12s;
-        }
-
-        .delay-2 {
-          animation-delay: 0.24s;
-        }
-
-        .delay-3 {
-          animation-delay: 0.36s;
-        }
-
-        @keyframes marquee {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-
-        .marquee-track {
-          animation: marquee 24s linear infinite;
-        }
-      `}</style>
-
       <main className="pvc-page overflow-hidden bg-white text-[#061540]">
         <section className="relative overflow-hidden bg-[#061540] px-4 py-16 text-white sm:px-6 lg:px-12 lg:py-20">
           <div className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-blue-700/20 blur-3xl" />
@@ -530,45 +482,84 @@ export default function AprendeConPvcPage() {
           </div>
         </section>
 
-        {selectedItem && (
-          <div
-            className="fixed inset-0 z-50 flex items-end justify-center bg-[#061540]/75 px-4 backdrop-blur-sm sm:items-center"
-            onClick={() => setSelectedItem(null)}
-          >
-            <div
-              className="relative max-h-[88vh] w-full max-w-4xl overflow-hidden rounded-t-[2rem] bg-white shadow-2xl sm:rounded-2xl"
-              onClick={(e) => e.stopPropagation()}
+        <AnimatePresence>
+          {selectedItem && (
+            <motion.div
+              className="fixed inset-0 z-50 flex items-end justify-center bg-[#061540]/75 px-4 backdrop-blur-sm sm:items-center"
+              onClick={() => setSelectedItem(null)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
             >
-              <div className="sticky top-0 z-10 border-b border-slate-100 bg-white p-5 sm:p-6">
-                <div className="flex items-start justify-between gap-5">
-                  <div>
-                    <span className="mb-3 inline-flex rounded-full bg-[#f0c040]/15 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#061540]">
-                      {selectedItem.tag}
-                    </span>
+              <motion.div
+                className="relative max-h-[88vh] w-full max-w-4xl overflow-hidden rounded-t-[2rem] bg-white shadow-2xl sm:rounded-2xl"
+                onClick={(e) => e.stopPropagation()}
+                initial={{
+                  opacity: 0,
+                  y: 60,
+                  scale: 0.96,
+                  filter: "blur(8px)",
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                }}
+                exit={{
+                  opacity: 0,
+                  y: 40,
+                  scale: 0.96,
+                  filter: "blur(8px)",
+                }}
+                transition={{
+                  duration: 0.35,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                <div className="sticky top-0 z-10 border-b border-slate-100 bg-white p-5 sm:p-6">
+                  <div className="flex items-start justify-between gap-5">
+                    <motion.div
+                      initial={{ opacity: 0, y: 14 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 8 }}
+                      transition={{ duration: 0.25, delay: 0.08 }}
+                    >
+                      <span className="mb-3 inline-flex rounded-full bg-[#f0c040]/15 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#061540]">
+                        {selectedItem.tag}
+                      </span>
 
-                    <h3 className="text-2xl font-extrabold leading-tight text-[#061540] sm:text-3xl">
-                      {selectedItem.title}
-                    </h3>
+                      <h3 className="text-2xl font-extrabold leading-tight text-[#061540] sm:text-3xl">
+                        {selectedItem.title}
+                      </h3>
+                    </motion.div>
+
+                    <button
+                      type="button"
+                      onClick={() => setSelectedItem(null)}
+                      className="grid size-10 shrink-0 cursor-pointer place-items-center rounded-full bg-[#061540] text-xl font-black text-white transition hover:bg-[#f0c040] hover:text-[#061540]"
+                    >
+                      ×
+                    </button>
                   </div>
-
-                  <button
-                    type="button"
-                    onClick={() => setSelectedItem(null)}
-                    className="grid size-10 shrink-0 cursor-pointer place-items-center rounded-full bg-[#061540] text-xl font-black text-white transition hover:bg-[#f0c040] hover:text-[#061540]"
-                  >
-                    ×
-                  </button>
                 </div>
-              </div>
 
-              <div className="max-h-[68vh] overflow-y-auto p-5 sm:p-8">
-                <div className="prose prose-slate max-w-none prose-h3:mt-8 prose-h3:text-xl prose-h3:font-extrabold prose-h3:text-[#061540] prose-p:leading-8 prose-p:text-slate-600 prose-strong:text-[#061540] prose-li:my-2 prose-li:text-slate-600">
-                  {selectedItem.content}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+                <motion.div
+                  className="max-h-[68vh] overflow-y-auto p-5 sm:p-8"
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 12 }}
+                  transition={{ duration: 0.3, delay: 0.12 }}
+                >
+                  <div className="prose prose-slate max-w-none prose-h3:mt-8 prose-h3:text-xl prose-h3:font-extrabold prose-h3:text-[#061540] prose-p:leading-8 prose-p:text-slate-600 prose-strong:text-[#061540] prose-li:my-2 prose-li:text-slate-600">
+                    {selectedItem.content}
+                  </div>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
 
       <Footer />

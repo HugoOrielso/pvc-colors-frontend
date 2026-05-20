@@ -27,7 +27,6 @@ const distributors = [
   },
 ];
 
-
 export default function DistribuidoresPage() {
   const [selectedDistributor, setSelectedDistributor] = useState(
     distributors[0]
@@ -36,59 +35,6 @@ export default function DistribuidoresPage() {
   return (
     <>
       <Header />
-
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-
-        .pvc-page,
-        .pvc-page * {
-          font-family: 'Poppins', sans-serif !important;
-        }
-
-        @keyframes fadeUp {
-          from {
-            opacity: 0;
-            transform: translateY(22px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .fade-up {
-          animation: fadeUp 0.65s ease both;
-        }
-
-        .delay-1 {
-          animation-delay: 0.12s;
-        }
-
-        .delay-2 {
-          animation-delay: 0.24s;
-        }
-
-        .delay-3 {
-          animation-delay: 0.36s;
-        }
-
-        .delay-4 {
-          animation-delay: 0.48s;
-        }
-
-        @keyframes marquee {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-
-        .marquee-track {
-          animation: marquee 24s linear infinite;
-        }
-      `}</style>
 
       <main className="pvc-page overflow-hidden bg-white text-[#061540]">
         <section className="relative overflow-hidden bg-[#061540] px-4 py-16 text-white sm:px-6 lg:px-12 lg:py-20">
@@ -163,33 +109,42 @@ export default function DistribuidoresPage() {
               </div>
             </div>
 
-            <div className="fade-up delay-2 relative mx-auto w-full max-w-xl lg:max-w-none">
-              <div className="absolute -inset-3 rounded-3xl bg-white/5 blur-xl" />
+            <div className="fade-up delay-2 mx-auto w-full max-w-xl lg:max-w-none">
+              <div className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_20px_60px_rgba(0,0,0,0.08)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_25px_70px_rgba(0,0,0,0.12)]">
 
-              <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-3 shadow-2xl backdrop-blur">
-                <Image
-                  src="/assets/hombreCasco.webp"
-                  alt="Distribuidores PVC Colors"
-                  width={900}
-                  height={700}
-                  className="h-80 w-full rounded-xl object-contain sm:h-105 lg:h-120"
-                  priority
-                />
+                {/* Imagen */}
+                <div className="relative overflow-hidden bg-slate-100">
+                  <Image
+                    src="/assets/hombreCasco.webp"
+                    alt="Distribuidores PVC Colors"
+                    width={900}
+                    height={700}
+                    className="w-full object-cover "
+                    priority
+                  />
 
-                <div className="absolute left-4 top-4 flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-2 backdrop-blur">
-                  <MapPin size={13} className="text-[#f0c040]" />
-                  <span className="text-xs font-medium text-white">
-                    Cúcuta, Colombia
-                  </span>
+                  {/* Overlay suave */}
+                  <div className="absolute inset-0 bg-linear-to-t from-[#061540]/75 via-[#061540]/20 to-transparent" />
                 </div>
 
-                <div className="absolute bottom-5 left-5 right-5 rounded-2xl border border-white/15 bg-[#061540]/75 p-4 backdrop-blur">
-                  <p className="text-sm font-bold">
-                    Atención cercana y especializada
-                  </p>
-                  <p className="mt-1 text-xs text-white/65">
-                    Productos de calidad para hogares, obras y proyectos.
-                  </p>
+                {/* Contenido */}
+                <div className="flex flex-col gap-4 bg-[#061540] p-6 text-white">
+
+                  <div className="flex items-center gap-2 text-sm text-white/80">
+                    <MapPin size={16} className="text-[#f0c040]" />
+                    <span>Cúcuta, Colombia</span>
+                  </div>
+
+                  <div>
+                    <h3 className="text-xl font-bold">
+                      Atención cercana y especializada
+                    </h3>
+
+                    <p className="mt-2 text-sm leading-relaxed text-white/70">
+                      Productos de calidad para hogares, obras y proyectos
+                      con acompañamiento técnico y atención personalizada.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -226,20 +181,18 @@ export default function DistribuidoresPage() {
                   <button
                     key={item.name}
                     onClick={() => setSelectedDistributor(item)}
-                    className={`w-full cursor-pointer rounded-2xl border p-6 text-left transition-all duration-300 ${
-                      isActive
-                        ? "border-[#061540] bg-[#061540] text-white shadow-xl"
-                        : "border-slate-200 bg-white text-[#061540] shadow-sm hover:-translate-y-1 hover:border-[#f0c040] hover:shadow-lg"
-                    }`}
+                    className={`w-full cursor-pointer rounded-2xl border p-6 text-left transition-all duration-300 ${isActive
+                      ? "border-[#061540] bg-[#061540] text-white shadow-xl"
+                      : "border-slate-200 bg-white text-[#061540] shadow-sm hover:-translate-y-1 hover:border-[#f0c040] hover:shadow-lg"
+                      }`}
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <span
-                          className={`mb-3 inline-flex rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] ${
-                            isActive
-                              ? "bg-[#f0c040] text-[#061540]"
-                              : "bg-[#f0c040]/20 text-[#061540]"
-                          }`}
+                          className={`mb-3 inline-flex rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] ${isActive
+                            ? "bg-[#f0c040] text-[#061540]"
+                            : "bg-[#f0c040]/20 text-[#061540]"
+                            }`}
                         >
                           {item.keyword}
                         </span>
@@ -249,28 +202,25 @@ export default function DistribuidoresPage() {
                         </h3>
 
                         <p
-                          className={`mt-3 text-sm leading-6 ${
-                            isActive ? "text-white/70" : "text-slate-500"
-                          }`}
+                          className={`mt-3 text-sm leading-6 ${isActive ? "text-white/70" : "text-slate-500"
+                            }`}
                         >
                           {item.address}
                         </p>
 
                         <p
-                          className={`mt-1 text-sm ${
-                            isActive ? "text-white/70" : "text-slate-500"
-                          }`}
+                          className={`mt-1 text-sm ${isActive ? "text-white/70" : "text-slate-500"
+                            }`}
                         >
                           {item.city}
                         </p>
                       </div>
 
                       <span
-                        className={`grid size-10 shrink-0 place-items-center rounded-full text-lg font-black ${
-                          isActive
-                            ? "bg-[#f0c040] text-[#061540]"
-                            : "bg-[#061540] text-white"
-                        }`}
+                        className={`grid size-10 shrink-0 place-items-center rounded-full text-lg font-black ${isActive
+                          ? "bg-[#f0c040] text-[#061540]"
+                          : "bg-[#061540] text-white"
+                          }`}
                       >
                         →
                       </span>
@@ -278,26 +228,32 @@ export default function DistribuidoresPage() {
                   </button>
                 );
               })}
+              <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_15px_45px_rgba(0,0,0,0.06)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.1)]">
 
-              <div className="overflow-hidden rounded-2xl border border-slate-200 bg-[#f8fafc] p-4 shadow-sm">
-                <div className="relative overflow-hidden rounded-xl">
+                {/* Imagen */}
+                <div className="relative overflow-hidden bg-slate-100">
                   <Image
                     src="/assets/mujerCall.webp"
                     width={700}
                     height={500}
                     alt="Atención al cliente PVC Colors"
-                    className="h-65 w-full object-contain sm:h-80"
+                    className=" w-full transition-transform duration-700 hover:scale-105"
                   />
 
-                  <div className="absolute inset-0 bg-linear-to-t from-[#061540]/80 via-[#061540]/20 to-transparent" />
+                  {/* Overlay elegante */}
+                  <div className="absolute inset-0 bg-linear-to-t from-[#061540]/85 via-[#061540]/20 to-transparent" />
+                </div>
 
-                  <div className="absolute bottom-4 left-4 right-4 text-white">
-                    <p className="text-lg font-bold">¿Necesitas ayuda?</p>
-                    <p className="mt-1 text-xs font-light leading-5 text-white/75">
-                      Nuestro servicio al cliente está dispuesto a asesorarte con
-                      atención personalizada.
-                    </p>
-                  </div>
+                {/* Contenido */}
+                <div className="bg-[#061540] px-6 py-5 text-white">
+                  <h3 className="text-xl font-bold">
+                    ¿Necesitas ayuda?
+                  </h3>
+
+                  <p className="mt-2 text-sm leading-relaxed text-white/75">
+                    Nuestro servicio al cliente está listo para asesorarte
+                    con atención personalizada y acompañamiento en cada proyecto.
+                  </p>
                 </div>
               </div>
             </aside>

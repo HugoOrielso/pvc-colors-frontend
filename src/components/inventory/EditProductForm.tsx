@@ -160,257 +160,259 @@ export default function UpdateProductForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-                <label className="mb-2 block text-xs font-semibold uppercase text-blue-700">
-                    Nombre
-                </label>
-                <input
-                    value={form.name}
-                    onChange={(e) =>
-                        setForm((prev) => ({ ...prev, name: e.target.value }))
-                    }
-                    placeholder="Nombre del producto"
-                    className="h-12 w-full rounded-xl border px-4 text-sm outline-none"
-                />
-            </div>
-
-            <div>
-                <label className="mb-2 block text-xs font-semibold uppercase text-blue-700">
-                    Slug
-                </label>
-                <input
-                    value={form.slug}
-                    onChange={(e) =>
-                        setForm((prev) => ({ ...prev, slug: e.target.value }))
-                    }
-                    placeholder="slug-producto"
-                    readOnly
-                    className="h-12 w-full cursor-not-allowed rounded-xl border bg-gray-100 px-4 text-sm text-gray-500 outline-none"
-                />
-            </div>
-
-            <div>
-                <label className="mb-2 block text-xs font-semibold uppercase text-blue-700">
-                    Descripción
-                </label>
-                <textarea
-                    name="description"
-                    value={form.description}
-                    onChange={(e) =>
-                        setForm((prev) => ({
-                            ...prev,
-                            description: e.target.value,
-                        }))
-                    }
-                    rows={4}
-                    className="w-full rounded-xl border px-4 py-3 text-sm outline-none"
-                    placeholder="Descripción comercial del producto..."
-                />
-            </div>
-
-            <div>
-                <label className="mb-2 block text-xs font-semibold uppercase text-blue-700">
-                    Recomendaciones
-                </label>
-                <textarea
-                    name="recommendations"
-                    value={form.recommendations}
-                    onChange={(e) =>
-                        setForm((prev) => ({
-                            ...prev,
-                            recommendations: e.target.value,
-                        }))
-                    }
-                    rows={3}
-                    className="w-full rounded-xl border px-4 py-3 text-sm outline-none"
-                    placeholder="Modo de uso, superficies recomendadas, advertencias..."
-                />
-            </div>
-
-            <ProductImagesPicker
-                value={form.images}
-                onChange={(images) =>
-                    setForm((prev) => ({ ...prev, images }))
-                }
-            />
-
-            <div className="space-y-2">
-                <label className="mb-2 block text-xs font-semibold uppercase text-blue-700">
-                    Ficha técnica PDF
-                </label>
-                <Input
-                    type="file"
-                    accept=".pdf"
-                    onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (!file) return;
-                        setForm((prev) => ({ ...prev, technicalSheet: file }));
-                    }}
-                />
-                {typeof form.technicalSheet === "string" && (
-                    <div className="mt-3 flex items-center justify-between rounded-xl border bg-slate-50 p-3">
-                        <div>
-                            <p className="text-sm font-semibold text-slate-900">
-                                Ficha técnica actual
-                            </p>
-                        </div>
-                        <a
-                            href={form.technicalSheet}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="rounded-lg bg-blue-700 px-3 py-2 text-xs font-semibold text-white"
-                        >
-                            Ver PDF
-                        </a>
-                    </div>
-                )}
-                {form.technicalSheet instanceof File && (
-                    <p className="text-sm text-slate-500">
-                        Nuevo PDF seleccionado: {form.technicalSheet.name}
-                    </p>
-                )}
-            </div>
-
-            <ProductColorsPicker
-                value={form.colors}
-                onChange={(colors) =>
-                    setForm((prev) => ({ ...prev, colors }))
-                }
-            />
-
-            <div className="space-y-4 rounded-md border p-4">
-                <div className="flex items-center justify-between">
-                    <h3 className="mb-2 block text-xs font-semibold uppercase text-blue-700">
-                        Presentaciones
-                    </h3>
-                    <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() =>
-                            setForm((prev) => ({
-                                ...prev,
-                                presentations: [
-                                    ...prev.presentations,
-                                    { name: "", price: 0, stock: 0, sku: "" },
-                                ],
-                            }))
+        <div className="flex items-center justify-center w-full ">
+            <form onSubmit={handleSubmit} className="space-y-6 m-2 border p-2 rounded w-full ">
+                <div>
+                    <label className="mb-2 block text-xs font-semibold uppercase text-blue-700">
+                        Nombre
+                    </label>
+                    <input
+                        value={form.name}
+                        onChange={(e) =>
+                            setForm((prev) => ({ ...prev, name: e.target.value }))
                         }
-                    >
-                        Agregar presentación
-                    </Button>
+                        placeholder="Nombre del producto"
+                        className="h-12 w-full rounded-xl border px-4 text-sm outline-none"
+                    />
                 </div>
 
-                {form.presentations.length === 0 && (
-                    <p className="text-sm text-slate-500">
-                        No hay presentaciones agregadas.
-                    </p>
-                )}
+                <div>
+                    <label className="mb-2 block text-xs font-semibold uppercase text-blue-700">
+                        Slug
+                    </label>
+                    <input
+                        value={form.slug}
+                        onChange={(e) =>
+                            setForm((prev) => ({ ...prev, slug: e.target.value }))
+                        }
+                        placeholder="slug-producto"
+                        readOnly
+                        className="h-12 w-full cursor-not-allowed rounded-xl border bg-gray-100 px-4 text-sm text-gray-500 outline-none"
+                    />
+                </div>
 
-                {form.presentations.map((presentation, index) => (
-                    <div
-                        key={index}
-                        className="grid gap-4 md:grid-cols-[1fr_1fr_1fr_1fr_auto]"
-                    >
-                        {/* FIX 2 — All handlers use prev to avoid stale closure */}
-                        <Input
-                            placeholder="Nombre"
-                            value={presentation.name}
-                            onChange={(e) => {
-                                const value = e.target.value;
-                                setForm((prev) => {
-                                    const updated = [...prev.presentations];
-                                    updated[index] = {
-                                        ...updated[index],
-                                        name: value,
-                                    };
-                                    return { ...prev, presentations: updated };
-                                });
-                            }}
-                        />
+                <div>
+                    <label className="mb-2 block text-xs font-semibold uppercase text-blue-700">
+                        Descripción
+                    </label>
+                    <textarea
+                        name="description"
+                        value={form.description}
+                        onChange={(e) =>
+                            setForm((prev) => ({
+                                ...prev,
+                                description: e.target.value,
+                            }))
+                        }
+                        rows={4}
+                        className="w-full rounded-xl border px-4 py-3 text-sm outline-none"
+                        placeholder="Descripción comercial del producto..."
+                    />
+                </div>
 
-                        <Input
-                            type="number"
-                            placeholder="Precio"
-                            value={presentation.price}
-                            onChange={(e) => {
-                                const value = Number(e.target.value);
-                                setForm((prev) => {
-                                    const updated = [...prev.presentations];
-                                    updated[index] = {
-                                        ...updated[index],
-                                        price: value,
-                                    };
-                                    return { ...prev, presentations: updated };
-                                });
-                            }}
-                        />
+                <div>
+                    <label className="mb-2 block text-xs font-semibold uppercase text-blue-700">
+                        Recomendaciones
+                    </label>
+                    <textarea
+                        name="recommendations"
+                        value={form.recommendations}
+                        onChange={(e) =>
+                            setForm((prev) => ({
+                                ...prev,
+                                recommendations: e.target.value,
+                            }))
+                        }
+                        rows={3}
+                        className="w-full rounded-xl border px-4 py-3 text-sm outline-none"
+                        placeholder="Modo de uso, superficies recomendadas, advertencias..."
+                    />
+                </div>
 
-                        <Input
-                            type="number"
-                            placeholder="Stock"
-                            value={presentation.stock}
-                            onChange={(e) => {
-                                const value = Number(e.target.value);
-                                setForm((prev) => {
-                                    const updated = [...prev.presentations];
-                                    updated[index] = {
-                                        ...updated[index],
-                                        stock: value,
-                                    };
-                                    return { ...prev, presentations: updated };
-                                });
-                            }}
-                        />
+                <ProductImagesPicker
+                    value={form.images}
+                    onChange={(images) =>
+                        setForm((prev) => ({ ...prev, images }))
+                    }
+                />
 
-                        <Input
-                            placeholder="SKU"
-                            value={presentation.sku ?? ""}
-                            onChange={(e) => {
-                                const value = e.target.value;
-                                setForm((prev) => {
-                                    const updated = [...prev.presentations];
-                                    updated[index] = {
-                                        ...updated[index],
-                                        sku: value,
-                                    };
-                                    return { ...prev, presentations: updated };
-                                });
-                            }}
-                        />
+                <div className="space-y-2">
+                    <label className="mb-2 block text-xs font-semibold uppercase text-blue-700">
+                        Ficha técnica PDF
+                    </label>
+                    <Input
+                        type="file"
+                        accept=".pdf"
+                        onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+                            setForm((prev) => ({ ...prev, technicalSheet: file }));
+                        }}
+                    />
+                    {typeof form.technicalSheet === "string" && (
+                        <div className="mt-3 flex items-center justify-between rounded-xl border bg-slate-50 p-3">
+                            <div>
+                                <p className="text-sm font-semibold text-slate-900">
+                                    Ficha técnica actual
+                                </p>
+                            </div>
+                            <a
+                                href={form.technicalSheet}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="rounded-lg bg-blue-700 px-3 py-2 text-xs font-semibold text-white"
+                            >
+                                Ver PDF
+                            </a>
+                        </div>
+                    )}
+                    {form.technicalSheet instanceof File && (
+                        <p className="text-sm text-slate-500">
+                            Nuevo PDF seleccionado: {form.technicalSheet.name}
+                        </p>
+                    )}
+                </div>
 
+                <ProductColorsPicker
+                    value={form.colors}
+                    onChange={(colors) =>
+                        setForm((prev) => ({ ...prev, colors }))
+                    }
+                />
+
+                <div className="space-y-4 rounded-md border p-4">
+                    <div className="flex items-center justify-between">
+                        <h3 className="mb-2 block text-xs font-semibold uppercase text-blue-700">
+                            Presentaciones
+                        </h3>
                         <Button
                             type="button"
-                            variant="destructive"
+                            variant="outline"
                             onClick={() =>
                                 setForm((prev) => ({
                                     ...prev,
-                                    presentations: prev.presentations.filter(
-                                        (_, i) => i !== index
-                                    ),
+                                    presentations: [
+                                        ...prev.presentations,
+                                        { name: "", price: 0, stock: 0, sku: "" },
+                                    ],
                                 }))
                             }
                         >
-                            Eliminar
+                            Agregar presentación
                         </Button>
                     </div>
-                ))}
-            </div>
 
-            <button
-                type="submit"
-                disabled={isPending}
-                className="h-12 w-full cursor-pointer rounded-xl bg-blue-700 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
-            >
-                {isPending ? (
-                    <div className="flex items-center justify-center w-full">
-                        <Loader2 className="mr-2 size-4 animate-spin" />
-                        Actualizando...
-                    </div>
-                ) : (
-                    <>Guardar cambios</>
-                )}
-            </button>
-        </form>
+                    {form.presentations.length === 0 && (
+                        <p className="text-sm text-slate-500">
+                            No hay presentaciones agregadas.
+                        </p>
+                    )}
+
+                    {form.presentations.map((presentation, index) => (
+                        <div
+                            key={index}
+                            className="grid gap-4 md:grid-cols-[1fr_1fr_1fr_1fr_auto]"
+                        >
+                            {/* FIX 2 — All handlers use prev to avoid stale closure */}
+                            <Input
+                                placeholder="Nombre"
+                                value={presentation.name}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    setForm((prev) => {
+                                        const updated = [...prev.presentations];
+                                        updated[index] = {
+                                            ...updated[index],
+                                            name: value,
+                                        };
+                                        return { ...prev, presentations: updated };
+                                    });
+                                }}
+                            />
+
+                            <Input
+                                type="number"
+                                placeholder="Precio"
+                                value={presentation.price}
+                                onChange={(e) => {
+                                    const value = Number(e.target.value);
+                                    setForm((prev) => {
+                                        const updated = [...prev.presentations];
+                                        updated[index] = {
+                                            ...updated[index],
+                                            price: value,
+                                        };
+                                        return { ...prev, presentations: updated };
+                                    });
+                                }}
+                            />
+
+                            <Input
+                                type="number"
+                                placeholder="Stock"
+                                value={presentation.stock}
+                                onChange={(e) => {
+                                    const value = Number(e.target.value);
+                                    setForm((prev) => {
+                                        const updated = [...prev.presentations];
+                                        updated[index] = {
+                                            ...updated[index],
+                                            stock: value,
+                                        };
+                                        return { ...prev, presentations: updated };
+                                    });
+                                }}
+                            />
+
+                            <Input
+                                placeholder="SKU"
+                                value={presentation.sku ?? ""}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    setForm((prev) => {
+                                        const updated = [...prev.presentations];
+                                        updated[index] = {
+                                            ...updated[index],
+                                            sku: value,
+                                        };
+                                        return { ...prev, presentations: updated };
+                                    });
+                                }}
+                            />
+
+                            <Button
+                                type="button"
+                                variant="destructive"
+                                onClick={() =>
+                                    setForm((prev) => ({
+                                        ...prev,
+                                        presentations: prev.presentations.filter(
+                                            (_, i) => i !== index
+                                        ),
+                                    }))
+                                }
+                            >
+                                Eliminar
+                            </Button>
+                        </div>
+                    ))}
+                </div>
+
+                <button
+                    type="submit"
+                    disabled={isPending}
+                    className="h-12 w-full cursor-pointer rounded-xl bg-blue-700 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                    {isPending ? (
+                        <div className="flex items-center justify-center w-full">
+                            <Loader2 className="mr-2 size-4 animate-spin" />
+                            Actualizando...
+                        </div>
+                    ) : (
+                        <>Guardar cambios</>
+                    )}
+                </button>
+            </form>
+        </div>
     );
 }

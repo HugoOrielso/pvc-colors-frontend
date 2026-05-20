@@ -2,7 +2,7 @@ import EditProductForm from '@/components/inventory/EditProductForm'
 
 const page = () => {
     return (
-        <div className='p-4'>
+        <div >
             <EditProductForm />
         </div>
     )

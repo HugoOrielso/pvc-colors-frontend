@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Layers, Loader2 } from "lucide-react";
+import { Layers, Loader2, Pencil } from "lucide-react";
 import { useProductLines } from "@/hooks/private/lines/useLines";
 import EmptyProductLines from "../common/EmptyProductsLines";
 
@@ -32,8 +32,8 @@ export default function SelectProductLineGrid() {
 
   if (!lines.length) {
     return (
-      <div className="rounded-2xl  bg-white p-6 text-sm text-slate-500">
-        <EmptyProductLines/>
+      <div className="rounded-2xl bg-white p-6 text-sm text-slate-500">
+        <EmptyProductLines />
       </div>
     );
   }
@@ -56,11 +56,9 @@ export default function SelectProductLineGrid() {
 
       <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
         {lines.map((line) => (
-          <button
+          <article
             key={line.id}
-            type="button"
-            onClick={() => router.push(`/dashboard/products/create/${line.id}`)}
-            className="group overflow-hidden rounded-2xl border bg-white text-left shadow-sm transition hover:-translate-y-1 hover:shadow-md cursor-pointer"
+            className="group overflow-hidden rounded-2xl border bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
           >
             <div className="relative h-40 w-full overflow-hidden bg-slate-100">
               {line.image ? (
@@ -90,11 +88,31 @@ export default function SelectProductLineGrid() {
                 {line.description}
               </p>
 
-              <p className="mt-4 text-sm font-semibold text-slate-900">
-                Crear producto →
-              </p>
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                <button
+                  type="button"
+                  onClick={() =>
+                    router.push(`/dashboard/products/create/${line.id}`)
+                  }
+                  className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#061540] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#0a215c] cursor-pointer"
+                >
+                  <Layers className="h-4 w-4" />
+                  Crear producto
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    router.push(`/dashboard/lines/${line.id}/edit`)
+                  }
+                  className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 cursor-pointer"
+                >
+                  <Pencil className="h-4 w-4" />
+                  Editar línea
+                </button>
+              </div>
             </div>
-          </button>
+          </article>
         ))}
       </div>
     </section>

@@ -35,12 +35,13 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen grid grid-rows-[auto_1fr_auto]">
+    <main className="pvc-page min-h-screen bg-white text-[#061540]">
       <Header />
-      <div>
-        <HeroSlider />
-        <PublicLines />
-      </div>
+
+      <HeroSlider />
+
+      <PublicLines />
+
       <Footer />
     </main>
   );

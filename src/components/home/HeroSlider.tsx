@@ -59,30 +59,11 @@ export const HeroSlider = () => {
   const slide = slides[current];
 
   return (
-    <section className="relative bg-[#08206b] overflow-hidden">
+    <section className="relative overflow-hidden bg-[#061540] text-white">
       {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Big circle top right */}
-        <div
-          className="absolute -top-32 -right-32 w-125 h-125 rounded-full opacity-10"
-          style={{ background: "radial-gradient(circle, #7ec8e3, transparent 70%)" }}
-        />
-        {/* Small circle bottom left */}
-        <div
-          className="absolute -bottom-20 -left-20 w-75 h-75 rounded-full opacity-10"
-          style={{ background: "radial-gradient(circle, #f5c518, transparent 70%)" }}
-        />
-        {/* Grid dots pattern */}
-        <svg className="absolute inset-0 w-full h-full opacity-[0.04]" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
-              <circle cx="2" cy="2" r="1.5" fill="white" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#dots)" />
-        </svg>
-      </div>
-
+      <div className="pointer-events-none absolute -left-32 -top-32 h-125 w-125 rounded-full bg-blue-700/20 blur-3xl" />
+      <div className="pointer-events-none absolute right-0 top-0 h-96 w-96 rounded-full bg-blue-500/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-24 right-20 h-72 w-72 rounded-full bg-[#f0c040]/10 blur-3xl" />
       <div className="mx-auto max-w-7xl px-6 py-12 md:py-16 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
@@ -252,16 +233,13 @@ export const HeroSlider = () => {
             <motion.div
               animate={{ y: [0, -8, 0] }}
               transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-              className="absolute -top-4 -right-4 bg-white rounded-2xl shadow-xl px-4 py-3 flex items-center gap-2.5 border border-slate-100"
+              className="absolute -top-4 -right-4 bg-white rounded-2xl shadow-xl p-2 flex items-center gap-2.5 border border-slate-100"
             >
               <div
                 className="w-8 h-8 rounded-lg"
                 style={{ background: `linear-gradient(135deg, ${slide.accent}, #08206b)` }}
               />
-              <div>
-                <div className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Color activo</div>
-                <div className="text-[13px] text-slate-700 font-bold">{slide.highlight}</div>
-              </div>
+
             </motion.div>
           </div>
         </div>

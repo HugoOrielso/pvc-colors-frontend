@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Boxes, Sparkles } from "lucide-react";
+import { ArrowRight, Boxes } from "lucide-react";
 import { ViewTransition } from "react";
 
 import { Header } from "@/components/home/Header";
@@ -19,60 +19,7 @@ export default function LinesPage() {
     <>
       <Header />
 
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-
-        .pvc-page,
-        .pvc-page * {
-          font-family: 'Poppins', sans-serif !important;
-        }
-
-        @keyframes fadeUp {
-          from {
-            opacity: 0;
-            transform: translateY(22px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .fade-up {
-          animation: fadeUp 0.65s ease both;
-        }
-
-        .delay-1 {
-          animation-delay: 0.12s;
-        }
-
-        .delay-2 {
-          animation-delay: 0.24s;
-        }
-
-        .delay-3 {
-          animation-delay: 0.36s;
-        }
-
-        .delay-4 {
-          animation-delay: 0.48s;
-        }
-
-        @keyframes marquee {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-
-        .marquee-track {
-          animation: marquee 24s linear infinite;
-        }
-      `}</style>
-
-      <main className="pvc-page overflow-hidden bg-white text-[#061540]">
+      <main className="overflow-hidden bg-white text-[#061540]">
         <section className="relative overflow-hidden bg-[#061540] px-4 py-16 text-white sm:px-6 lg:px-12 lg:py-20">
           <div className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-blue-700/20 blur-3xl" />
           <div className="pointer-events-none absolute right-0 top-0 h-96 w-96 rounded-full bg-blue-500/10 blur-3xl" />
@@ -147,16 +94,8 @@ export default function LinesPage() {
               <div className="absolute -inset-3 rounded-3xl bg-white/5 blur-xl" />
 
               <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 shadow-2xl backdrop-blur">
-                <div className="absolute -right-5 -top-5 rounded-2xl bg-white px-5 py-4 shadow-xl">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-[#061540]/50">
-                    Productos
-                  </p>
-                  <p className="text-3xl font-extrabold text-[#061540]">
-                    {lines.length || 0}+
-                  </p>
-                </div>
 
-                <div className="flex h-[420px] w-full items-center justify-center rounded-xl bg-white/5">
+                <div className="flex h-105 w-full items-center justify-center rounded-xl bg-white/5">
                   <EmptyLinesAnimation />
                 </div>
               </div>
@@ -211,7 +150,7 @@ export default function LinesPage() {
                 {Array.from({ length: 6 }).map((_, index) => (
                   <div
                     key={index}
-                    className="h-[390px] animate-pulse rounded-2xl bg-slate-100 shadow-sm"
+                    className="h-97.5 animate-pulse rounded-2xl bg-slate-100 shadow-sm"
                   />
                 ))}
               </div>
@@ -256,7 +195,7 @@ export default function LinesPage() {
                           </div>
                         </ViewTransition>
 
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#061540]/90 via-[#061540]/25 to-transparent" />
+                        <div className="absolute inset-0 bg-linear-to-t from-[#061540]/90 via-[#061540]/25 to-transparent" />
 
                         <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-xs font-bold uppercase text-[#061540] shadow-lg backdrop-blur">
                           <span className="size-2 rounded-full bg-[#f0c040]" />
