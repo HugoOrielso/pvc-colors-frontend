@@ -10,7 +10,6 @@ import { Footer } from "@/components/home/Footer";
 import { useProductLinesPublic } from "@/hooks/public/lines/usePublicLines";
 import EmptyLinesAnimation from "@/components/lines/LottieLineAnimation";
 
-
 export default function LinesPage() {
   const { data, isLoading } = useProductLinesPublic();
   const lines = Array.isArray(data?.data) ? data.data : [];
@@ -94,7 +93,6 @@ export default function LinesPage() {
               <div className="absolute -inset-3 rounded-3xl bg-white/5 blur-xl" />
 
               <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 shadow-2xl backdrop-blur">
-
                 <div className="flex h-105 w-full items-center justify-center rounded-xl bg-white/5">
                   <EmptyLinesAnimation />
                 </div>
@@ -102,7 +100,6 @@ export default function LinesPage() {
             </div>
           </div>
         </section>
-
 
         <section
           id="lineas"
@@ -185,7 +182,7 @@ export default function LinesPage() {
                         <ViewTransition name={`line-image-${line.id}`}>
                           <div className="relative h-72 overflow-hidden">
                             <Image
-                              src={line.image}
+                              src={line.image || "/placeholder-product.png"}
                               alt={line.name}
                               fill
                               priority={index < 3}

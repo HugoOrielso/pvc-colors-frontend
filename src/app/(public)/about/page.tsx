@@ -65,7 +65,7 @@ export default function AboutPage() {
               </div>
 
               <h1 className="fade-up delay-1 text-4xl font-bold leading-tight lg:text-5xl">
-                Distribuidora
+                Pinturas
                 <br />
                 <span className="text-[#f0c040]">PVC Colors</span>
                 <br />
@@ -108,6 +108,7 @@ export default function AboutPage() {
                   </div>
                 ))}
               </div>
+              <p>► Somos fabricantes</p>
             </div>
 
             <div className="fade-up delay-2 relative">

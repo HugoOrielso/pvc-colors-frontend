@@ -1,24 +1,52 @@
-interface ProductColorById {
-    id: string;
-    name: string | null;
-    value: string;
-    productId: string;
+export interface ProductLine {
+  id: string;
+  slug: string;
+  name: string;
+  description: string | null;
+  image: string | null;
+  active?: boolean;
+  createdAt: string;
+  updatedAt: string;
+  _count?: {
+    products: number;
+  };
 }
 
-interface ProductPresentationById {
-    id: string;
-    name: string;
-    productId: string;
+export interface ProductColor {
+  id: string;
+  name?: string | null;
+  value: string;
 }
 
-interface ProductLineById {
+export interface ProductColorGroup {
+  id: string;
+  name: string;
+  description?: string | null;
+  colors: ProductColor[];
+}
+
+export interface ProductLineProduct {
+  id: string;
+  name: string;
+  description: string;
+  technicalSheetUrl?: string | null;
+  presentations: {
     id: string;
-    slug: string;
     name: string;
-    description: string | null;
-    image: string | null;
-    createdAt: string;
-    updatedAt: string;
+    price: number;
+    stock: number;
+    sku?: string | null;
+  }[];
+  images: {
+    id: string;
+    url: string;
+    alt?: string | null;
+  }[];
+  colorGroups: ProductColorGroup[];
+}
+
+export interface ProductLineById extends ProductLine {
+  products: ProductLineProduct[];
 }
 
 interface ProductById {

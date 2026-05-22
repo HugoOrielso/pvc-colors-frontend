@@ -33,11 +33,11 @@ export default function ProductsPage() {
     <div className="space-y-6 p-3">
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.08em] text-(--color-brand-green)">
+          <p className="text-sm font-semibold uppercase tracking-[0.08em]  text-blue-700">
             Inventario
           </p>
 
-          <h1 className="mt-1 text-3xl font-black text-slate-900">
+          <h1 className="mt-1 text-3xl font-black  text-blue-700">
             Gestión de productos
           </h1>
 

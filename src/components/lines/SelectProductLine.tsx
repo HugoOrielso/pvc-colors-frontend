@@ -41,11 +41,11 @@ export default function SelectProductLineGrid() {
   return (
     <section className="space-y-6">
       <div>
-        <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+        <p className="text-sm font-semibold uppercase tracking-wide  text-blue-700">
           Crear producto
         </p>
 
-        <h1 className="mt-1 text-2xl font-bold text-slate-900">
+        <h1 className="mt-1 text-2xl font-bold  text-blue-700">
           Selecciona una línea
         </h1>
 

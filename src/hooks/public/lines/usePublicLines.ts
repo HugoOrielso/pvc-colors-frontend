@@ -6,6 +6,8 @@ import {
   getProductLinesServicePublic,
 } from "@/services/public/lines/public-lines.service";
 
+
+
 export function useProductLinesPublic() {
   return useQuery({
     queryKey: ["product-lines"],
@@ -17,7 +19,7 @@ export function useProductLineByIdPublic(id: string) {
   return useQuery({
     queryKey: ["public-product-line", id],
     queryFn: () => getProductLinesByIdServicePublic(id),
-    enabled: !!id,
-    staleTime: 1000 * 60 * 5, // 5 min
+    enabled: Boolean(id),
+    staleTime: 1000 * 60 * 5,
   });
 }

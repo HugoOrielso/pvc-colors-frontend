@@ -38,6 +38,13 @@ interface ProductLine {
   };
 }
 
+interface ProductColorGroup {
+  id: string;
+  name: string;
+  description?: string | null;
+  colors: ProductColor[];
+}
+
 interface ProductLineById {
   id: string;
   slug: string;
@@ -66,7 +73,7 @@ interface ProductLineProduct {
   createdAt: string;
   updatedAt: string;
 
-  colors: ProductColor[];
+  colorGroups: ProductColorGroup[];
   presentations: ProductPresentation[];
   images: ProductImage[];
 }

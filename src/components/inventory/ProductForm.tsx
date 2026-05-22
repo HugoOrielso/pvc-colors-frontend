@@ -12,6 +12,12 @@ type ColorForm = {
   value: string;
 };
 
+type ColorGroupForm = {
+  name: string;
+  description: string;
+  colors: ColorForm[];
+};
+
 type PresentationForm = {
   name: string;
   price: string;
@@ -19,11 +25,25 @@ type PresentationForm = {
   sku: string;
 };
 
+type FeatureForm = {
+  name: string;
+  description: string;
+};
+
+const initialFeature: FeatureForm = {
+  name: "",
+  description: "",
+};
+
+
+
 const initialForm = {
   name: "",
   slug: "",
   description: "",
   recommendations: "",
+  coverageMinM2PerGallon: "",
+  coverageMaxM2PerGallon: "",
 };
 
 const initialPresentation: PresentationForm = {
@@ -49,13 +69,86 @@ export default function CreateProductForm() {
   const lineId = params.id;
 
   const [form, setForm] = useState(initialForm);
-
+  const [features, setFeatures] = useState<FeatureForm[]>([]);
   const [colors, setColors] = useState<ColorForm[]>([
     {
       name: "",
       value: "",
     },
   ]);
+  const [colorGroups, setColorGroups] = useState<ColorGroupForm[]>([]);
+  function addColorGroup() {
+    setColorGroups((prev) => [
+      ...prev,
+      {
+        name: "",
+        description: "",
+        colors: [{ name: "", value: "" }],
+      },
+    ]);
+  }
+
+  function removeColorGroup(groupIndex: number) {
+    setColorGroups((prev) => prev.filter((_, i) => i !== groupIndex));
+  }
+
+  function updateColorGroup(
+    groupIndex: number,
+    key: keyof Omit<ColorGroupForm, "colors">,
+    value: string
+  ) {
+    setColorGroups((prev) =>
+      prev.map((group, i) =>
+        i === groupIndex ? { ...group, [key]: value } : group
+      )
+    );
+  }
+
+  function addColorToGroup(groupIndex: number) {
+    setColorGroups((prev) =>
+      prev.map((group, i) =>
+        i === groupIndex
+          ? {
+            ...group,
+            colors: [...group.colors, { name: "", value: "" }],
+          }
+          : group
+      )
+    );
+  }
+
+  function updateColorInGroup(
+    groupIndex: number,
+    colorIndex: number,
+    key: keyof ColorForm,
+    value: string
+  ) {
+    setColorGroups((prev) =>
+      prev.map((group, i) =>
+        i === groupIndex
+          ? {
+            ...group,
+            colors: group.colors.map((color, j) =>
+              j === colorIndex ? { ...color, [key]: value } : color
+            ),
+          }
+          : group
+      )
+    );
+  }
+
+  function removeColorFromGroup(groupIndex: number, colorIndex: number) {
+    setColorGroups((prev) =>
+      prev.map((group, i) =>
+        i === groupIndex
+          ? {
+            ...group,
+            colors: group.colors.filter((_, j) => j !== colorIndex),
+          }
+          : group
+      )
+    );
+  }
 
   const [presentations, setPresentations] = useState<PresentationForm[]>([
     initialPresentation,
@@ -194,6 +287,26 @@ export default function CreateProductForm() {
     });
   }
 
+  function addFeature() {
+    setFeatures((prev) => [...prev, { ...initialFeature }]);
+  }
+
+  function updateFeature(
+    index: number,
+    key: keyof FeatureForm,
+    value: string
+  ) {
+    setFeatures((prev) =>
+      prev.map((feature, i) =>
+        i === index ? { ...feature, [key]: value } : feature
+      )
+    );
+  }
+
+  function removeFeature(index: number) {
+    setFeatures((prev) => prev.filter((_, i) => i !== index));
+  }
+
   function resetForm() {
     setForm(initialForm);
     setColors([{ name: "", value: "" }]);
@@ -201,6 +314,8 @@ export default function CreateProductForm() {
     images.forEach((image) => {
       URL.revokeObjectURL(image.preview);
     });
+    setFeatures([]);
+    setColorGroups([]);
     setImages([]);
     setTechnicalSheet(null);
     setTechnicalSheetPreview("");
@@ -242,6 +357,13 @@ export default function CreateProductForm() {
         presentation.stock < 0
     );
 
+    const validFeatures = features
+      .filter((feature) => feature.name.trim())
+      .map((feature) => ({
+        name: feature.name.trim(),
+        description: feature.description.trim() || undefined,
+      }));
+
     if (invalidPresentation) {
       return toast.error(
         "Cada presentación debe tener precio entero mayor a 0 y stock mayor o igual a 0"
@@ -254,10 +376,16 @@ export default function CreateProductForm() {
         slug: form.slug.trim(),
         description: form.description.trim(),
         recommendations: form.recommendations.trim() || undefined,
+        coverageMinM2PerGallon: form.coverageMinM2PerGallon
+          ? Number(form.coverageMinM2PerGallon)
+          : undefined,
+
+        coverageMaxM2PerGallon: form.coverageMaxM2PerGallon
+          ? Number(form.coverageMaxM2PerGallon)
+          : undefined,
         productLineId: String(lineId).trim(),
-
+        features: validFeatures,
         images: images.map((image) => image.file),
-
         technicalSheet: technicalSheet ?? undefined,
 
         colors: colors
@@ -266,7 +394,20 @@ export default function CreateProductForm() {
             name: color.name.trim() || undefined,
             value: color.value.trim(),
           })),
-
+        colorGroups: colorGroups
+          .filter((group) => group.name.trim())
+          .map((group, groupIndex) => ({
+            name: group.name.trim(),
+            description: group.description.trim() || undefined,
+            position: groupIndex,
+            colors: group.colors
+              .filter((color) => color.value.trim())
+              .map((color) => ({
+                name: color.name.trim() || undefined,
+                value: color.value.trim(),
+              })),
+          }))
+          .filter((group) => group.colors.length > 0),
         presentations: validPresentations,
       },
       {
@@ -352,6 +493,53 @@ export default function CreateProductForm() {
             className="w-full rounded-xl border px-4 py-3 text-sm outline-none"
             placeholder="Modo de uso, superficies recomendadas, advertencias..."
           />
+        </div>
+
+        <div className="rounded-xl border p-4">
+          <div className="mb-3">
+            <h3 className="font-semibold text-blue-700">
+              Rendimiento para calculadora
+            </h3>
+            <p className="text-xs text-slate-500">
+              Ejemplo: si la ficha dice 25 - 30 m²/galón, escribe 25 y 30.
+            </p>
+          </div>
+
+          <div className="grid gap-3 md:grid-cols-2">
+            <div>
+              <label className="mb-2 block text-xs font-semibold uppercase text-blue-700">
+                Cobertura mínima m²/galón
+              </label>
+
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                name="coverageMinM2PerGallon"
+                value={form.coverageMinM2PerGallon}
+                onChange={handleChange}
+                className="h-12 w-full rounded-xl border px-4 text-sm outline-none"
+                placeholder="Ej: 25"
+              />
+            </div>
+
+            <div>
+              <label className="mb-2 block text-xs font-semibold uppercase text-blue-700">
+                Cobertura máxima m²/galón
+              </label>
+
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                name="coverageMaxM2PerGallon"
+                value={form.coverageMaxM2PerGallon}
+                onChange={handleChange}
+                className="h-12 w-full rounded-xl border px-4 text-sm outline-none"
+                placeholder="Ej: 30"
+              />
+            </div>
+          </div>
         </div>
 
         <div>
@@ -497,6 +685,185 @@ export default function CreateProductForm() {
                 <button
                   type="button"
                   onClick={() => removeColor(index)}
+                  className="cursor-pointer rounded-xl border px-4 text-sm hover:bg-slate-50"
+                >
+                  Quitar
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-xl border p-4">
+          <div className="mb-3 flex items-center justify-between">
+            <div>
+              <h3 className="font-semibold text-blue-700">Grupos de colores</h3>
+              <p className="text-xs text-slate-500">
+                Úsalo cuando el producto tenga muchos colores.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={addColorGroup}
+              className="cursor-pointer rounded-lg bg-blue-700 px-3 py-2 text-xs font-semibold text-white"
+            >
+              Agregar grupo
+            </button>
+          </div>
+
+          <div className="space-y-4">
+            {colorGroups.map((group, groupIndex) => (
+              <div key={groupIndex} className="rounded-xl border bg-slate-50 p-4">
+                <div className="mb-3 grid gap-3 md:grid-cols-[1fr_1fr_auto]">
+                  <input
+                    value={group.name}
+                    onChange={(e) =>
+                      updateColorGroup(groupIndex, "name", e.target.value)
+                    }
+                    placeholder="Nombre del grupo: Rojos, Azules..."
+                    className="h-11 rounded-xl border px-4 text-sm outline-none"
+                  />
+
+                  <input
+                    value={group.description}
+                    onChange={(e) =>
+                      updateColorGroup(groupIndex, "description", e.target.value)
+                    }
+                    placeholder="Descripción opcional"
+                    className="h-11 rounded-xl border px-4 text-sm outline-none"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => removeColorGroup(groupIndex)}
+                    className="cursor-pointer rounded-xl border bg-white px-4 text-sm hover:bg-slate-100"
+                  >
+                    Quitar grupo
+                  </button>
+                </div>
+
+                <div className="mb-3 flex justify-between">
+                  <p className="text-sm font-semibold text-slate-700">
+                    Colores del grupo
+                  </p>
+
+                  <button
+                    type="button"
+                    onClick={() => addColorToGroup(groupIndex)}
+                    className="cursor-pointer rounded-lg bg-slate-900 px-3 py-2 text-xs font-semibold text-white"
+                  >
+                    Agregar color
+                  </button>
+                </div>
+
+                <div className="space-y-3">
+                  {group.colors.map((color, colorIndex) => (
+                    <div
+                      key={colorIndex}
+                      className="grid gap-3 md:grid-cols-[1fr_160px_48px_auto]"
+                    >
+                      <input
+                        value={color.name}
+                        onChange={(e) =>
+                          updateColorInGroup(
+                            groupIndex,
+                            colorIndex,
+                            "name",
+                            e.target.value
+                          )
+                        }
+                        placeholder="Nombre del color"
+                        className="h-11 rounded-xl border px-4 text-sm outline-none"
+                      />
+
+                      <div className="flex h-11 items-center gap-2 rounded-xl border bg-white px-3">
+                        <input
+                          type="color"
+                          value={color.value || "#000000"}
+                          onChange={(e) =>
+                            updateColorInGroup(
+                              groupIndex,
+                              colorIndex,
+                              "value",
+                              e.target.value
+                            )
+                          }
+                          className="h-8 w-10 cursor-pointer rounded border-none bg-transparent p-0"
+                        />
+
+                        <span className="text-xs font-medium text-slate-600">
+                          {color.value || "#000000"}
+                        </span>
+                      </div>
+
+                      <div
+                        className="h-11 rounded-xl border"
+                        style={{
+                          backgroundColor: color.value || "#000000",
+                        }}
+                      />
+
+                      <button
+                        type="button"
+                        onClick={() => removeColorFromGroup(groupIndex, colorIndex)}
+                        className="cursor-pointer rounded-xl border bg-white px-4 text-sm hover:bg-slate-100"
+                      >
+                        Quitar
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-xl border p-4">
+          <div className="mb-3 flex items-center justify-between">
+            <div>
+              <h3 className="font-semibold text-blue-700">Características</h3>
+              <p className="text-xs text-slate-500">
+                Agrega beneficios o atributos destacados del producto.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={addFeature}
+              className="cursor-pointer rounded-lg bg-blue-700 px-3 py-2 text-xs font-semibold text-white"
+            >
+              Agregar característica
+            </button>
+          </div>
+
+          <div className="space-y-3">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className="grid gap-3 md:grid-cols-[1fr_2fr_auto]"
+              >
+                <input
+                  value={feature.name}
+                  onChange={(e) =>
+                    updateFeature(index, "name", e.target.value)
+                  }
+                  placeholder="Ej: Alto cubrimiento"
+                  className="h-11 rounded-xl border px-4 text-sm outline-none"
+                />
+
+                <input
+                  value={feature.description}
+                  onChange={(e) =>
+                    updateFeature(index, "description", e.target.value)
+                  }
+                  placeholder="Descripción de la característica"
+                  className="h-11 rounded-xl border px-4 text-sm outline-none"
+                />
+
+                <button
+                  type="button"
+                  onClick={() => removeFeature(index)}
                   className="cursor-pointer rounded-xl border px-4 text-sm hover:bg-slate-50"
                 >
                   Quitar

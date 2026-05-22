@@ -9,6 +9,12 @@ export async function createProductService(
   formData.append("slug", data.slug);
   formData.append("description", data.description);
   formData.append("productLineId", data.productLineId);
+  if (data.coverageMinM2PerGallon) {
+    formData.append("coverageMinM2PerGallon", String(data.coverageMinM2PerGallon));
+  }
+  if (data.coverageMaxM2PerGallon) {
+    formData.append("coverageMaxM2PerGallon", String(data.coverageMaxM2PerGallon));
+  }
 
   if (data.recommendations?.trim()) {
     formData.append(
@@ -17,15 +23,10 @@ export async function createProductService(
     );
   }
 
-  formData.append(
-    "colors",
-    JSON.stringify(data.colors ?? [])
-  );
-
-  formData.append(
-    "presentations",
-    JSON.stringify(data.presentations ?? [])
-  );
+  formData.append("colors", JSON.stringify(data.colors ?? []));
+  formData.append("colorGroups", JSON.stringify(data.colorGroups ?? []));
+  formData.append("presentations", JSON.stringify(data.presentations ?? []));
+  formData.append("features", JSON.stringify(data.features ?? []));
 
   if (data.technicalSheet instanceof File) {
     formData.append(

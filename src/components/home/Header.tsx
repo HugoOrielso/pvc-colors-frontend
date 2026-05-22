@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Calculator, Menu, MonitorCog, X } from "lucide-react";
+import { Menu, MonitorCog, X } from "lucide-react";
+import { Separator } from "../ui/separator";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,6 +25,8 @@ export const Header = () => {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <Link href="/" onClick={closeMenu} className="flex items-center gap-3">
+          <p>Tienda</p>
+          <Separator orientation="vertical" className=" bg-slate-300" />
           <Image
             src="/assets/logo.webp"
             alt="PVC Color's"
@@ -39,7 +42,7 @@ export const Header = () => {
             <Link
               key={item.label}
               href={item.href}
-              className="text-[13px] font-semibold tracking-wide text-slate-500 transition-colors duration-200 hover:text-[#08206b]"
+              className="text-[13px] font-semibold tracking-wide  transition-colors duration-200 hover:text-[#08206b]"
             >
               {item.label}
             </Link>
@@ -47,14 +50,6 @@ export const Header = () => {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <Link
-            href="/calculator"
-            className="inline-flex items-center gap-2 rounded-xl bg-[#08206b] px-5 py-2.5 text-[13px] font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0a2d96] hover:shadow-lg hover:shadow-[#08206b]/25"
-          >
-            <Calculator size={15} />
-            Calculadora
-          </Link>
-
           <Link
             href="/login"
             className="inline-flex items-center gap-2 rounded-xl border border-[#08206b]/15 bg-white px-5 py-2.5 text-[13px] font-bold text-[#08206b] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#08206b] hover:bg-[#f8fafc] hover:shadow-lg"
@@ -89,15 +84,7 @@ export const Header = () => {
               </Link>
             ))}
 
-            <div className="mt-3 grid gap-3 border-t border-slate-100 pt-4 sm:grid-cols-2">
-              <Link
-                href="/calculator"
-                onClick={closeMenu}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#08206b] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#0a2d96]"
-              >
-                <Calculator size={16} />
-                Calculadora
-              </Link>
+            <div className="mt-3 grid gap-3 border-t border-slate-100 pt-4 ">
 
               <Link
                 href="/login"

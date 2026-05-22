@@ -12,7 +12,23 @@ export async function updateProductService(
   formData.append("productLineId", data.productLineId);
   formData.append("recommendations", data.recommendations?.trim() ?? "");
 
+  if (data.coverageMinM2PerGallon !== undefined) {
+    formData.append(
+      "coverageMinM2PerGallon",
+      String(data.coverageMinM2PerGallon)
+    );
+  }
+
+  if (data.coverageMaxM2PerGallon !== undefined) {
+    formData.append(
+      "coverageMaxM2PerGallon",
+      String(data.coverageMaxM2PerGallon)
+    );
+  }
+
   formData.append("colors", JSON.stringify(data.colors ?? []));
+  formData.append("colorGroups", JSON.stringify(data.colorGroups ?? []));
+  formData.append("features", JSON.stringify(data.features ?? []));
   formData.append("presentations", JSON.stringify(data.presentations ?? []));
 
   formData.append(

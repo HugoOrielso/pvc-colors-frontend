@@ -69,7 +69,7 @@ const PublicLines = () => {
                         </p>
                     </div>
                 ) : (
-                    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
                         {lines.map((line, index) => (
                             <Link
                                 key={line.id}

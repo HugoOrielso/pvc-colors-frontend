@@ -6,7 +6,6 @@ import {
     ArrowLeft,
     ArrowRight,
     Boxes,
-    FileText,
     Layers3,
     PaintBucket,
     PackageCheck,
@@ -94,10 +93,12 @@ export default function LineDetailPage() {
                                         <div className="rounded-3xl bg-white/10 p-5 text-white backdrop-blur">
                                             <PaintBucket className="mb-3 h-6 w-6 text-[#ffcc00]" />
                                             <p className="text-3xl font-black">
-                                                {products.reduce(
-                                                    (total, product) => total + product.colors.length,
-                                                    0
-                                                )}
+                                                {products.reduce((total, product) => {
+                                                    const colors =
+                                                        product.colorGroups?.flatMap((group) => group.colors ?? []) ?? [];
+
+                                                    return total + colors.length;
+                                                }, 0)}
                                             </p>
                                             <p className="mt-1 text-xs font-bold uppercase tracking-widest text-white/55">
                                                 Colores
@@ -163,7 +164,7 @@ export default function LineDetailPage() {
 
                             {products.length === 0 ? (
                                 <div className="rounded-[2rem] border border-dashed border-[#071d78]/20 bg-white p-12 text-center shadow-sm">
-                                    <Boxes className="mx-auto mb-4 h-12 w-12 text-[#071d78]" />
+                                    <Boxes className="mx-auto mm-4 text-[#071d78]" />
 
                                     <h3 className="text-2xl font-black">
                                         Esta línea aún no tiene productos
@@ -175,23 +176,22 @@ export default function LineDetailPage() {
                                     </p>
                                 </div>
                             ) : (
-                                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
                                     {products.map((product) => {
                                         const mainImage = product.images?.[0];
-
                                         return (
                                             <Link
                                                 key={product.id}
                                                 href={`/products/${product.id}`}
                                                 className="group overflow-hidden rounded-[2rem] bg-white p-3 shadow-sm ring-1 ring-black/5 transition duration-300 hover:-translate-y-2 hover:shadow-2xl"
                                             >
-                                                <div className="relative h-72 overflow-hidden rounded-[1.5rem] bg-[#071d78]/5">
+                                                <div className="relative h-68 overflow-hidden rounded-[1.5rem] bg-[#071d78]/5">
                                                     <Image
                                                         src={mainImage?.url || "/placeholder-product.png"}
                                                         alt={mainImage?.alt || product.name}
                                                         fill
                                                         className="object-cover transition duration-700 group-hover:scale-110"
-                                                        sizes="(max-width: 768px) 100vw, 33vw"
+                                                        sizes="(max-width: 668px) 100vw, 28vw"
                                                     />
 
                                                     <div className="absolute inset-0 bg-linear-to-t from-[#061540]/80 via-[#061540]/15 to-transparent" />
@@ -213,8 +213,8 @@ export default function LineDetailPage() {
                                                         {product.description}
                                                     </p>
 
-                                                    <div className="mt-5 flex flex-wrap gap-2">
-                                                        {product.colors.slice(0, 5).map((color) => (
+                                                    {/* <div className="mt-5 flex flex-wrap gap-2">
+                                                        {colors.slice(0, 5).map((color) => (
                                                             <span
                                                                 key={color.id}
                                                                 className="h-6 w-6 rounded-full border border-black/10 shadow-sm"
@@ -223,22 +223,15 @@ export default function LineDetailPage() {
                                                             />
                                                         ))}
 
-                                                        {product.colors.length > 5 && (
+                                                        {colors.length > 5 && (
                                                             <span className="flex h-6 items-center rounded-full bg-[#071d78]/8 px-2 text-xs font-black text-[#071d78]">
-                                                                +{product.colors.length - 5}
+                                                                +{colors.length - 5}
                                                             </span>
                                                         )}
-                                                    </div>
+                                                    </div> */}
 
                                                     <div className="mt-6 flex items-center justify-between border-t border-[#061540]/10 pt-5">
                                                         <div className="flex items-center gap-3">
-                                                            {product.technicalSheetUrl && (
-                                                                <span className="inline-flex items-center gap-2 rounded-full bg-[#071d78]/8 px-3 py-2 text-xs font-black text-[#071d78]">
-                                                                    <FileText className="h-4 w-4" />
-                                                                    Ficha
-                                                                </span>
-                                                            )}
-
                                                             <span className="rounded-full bg-[#ffcc00]/25 px-3 py-2 text-xs font-black text-[#061540]">
                                                                 Ver producto
                                                             </span>

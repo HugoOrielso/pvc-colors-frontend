@@ -84,8 +84,9 @@ export default function EditProductLineForm() {
     }
 
     return (
-        <div className=" flex items-center justify-center w-full ">
-            <form onSubmit={handleSubmit} className="space-y-6 w-full max-w-5xl m-2 border p-2 rounded">
+        <div className=" flex items-center justify-center flex-col w-full p-4">
+            <h2 className="text-2xl font-bold flex w-full justify-start text-blue-700">Editar Línea</h2>
+            <form onSubmit={handleSubmit} className="space-y-6 w-full   border p-4 rounded">
                 <div>
                     <label className="mb-2 block text-xs font-semibold uppercase text-blue-700">
                         Nombre

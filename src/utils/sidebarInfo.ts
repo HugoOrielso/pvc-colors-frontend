@@ -17,7 +17,12 @@ import {
   Boxes,
   Layers,
   Receipt,
-  PlusCircle, // 🔥 crear línea
+  PlusCircle,
+  BookOpenCheck,
+  SquareLibrary,
+  TruckElectric,
+  Truck,
+  BusFront, 
 } from "lucide-react";
 
 export const links: SidebarLink[] = [
@@ -72,5 +77,45 @@ export const links: SidebarLink[] = [
     label: "Facturas",
     icon: Receipt,
     roles: ["ADMIN", "OPERATOR"],
+  },
+  {
+    href: "/dashboard/articles",
+    label: "Artículos",
+    icon: Layers,
+    roles: ["ADMIN", "OPERATOR"],
+    children: [
+      {
+        href: "/dashboard/articles",
+        label: "Ver artículos",
+        icon: SquareLibrary, // listado → consistente con productos
+        roles: ["ADMIN", "OPERATOR"],
+      },
+      {
+        href: "/dashboard/articles/create",
+        label: "Crear artículo",
+        icon: BookOpenCheck, // 🔥 acción clara
+        roles: ["ADMIN"],
+      },
+    ],
+  },
+    {
+    href: "/dashboard/distributors",
+    label: "Distribuidores",
+    icon: BusFront,
+    roles: ["ADMIN", "OPERATOR"],
+    children: [
+      {
+        href: "/dashboard/distributors",
+        label: "Ver distribuidores",
+        icon: Truck, // listado → consistente con productos
+        roles: ["ADMIN", "OPERATOR"],
+      },
+      {
+        href: "/dashboard/distributors/create",
+        label: "Crear distribuidor",
+        icon: TruckElectric, // 🔥 acción clara
+        roles: ["ADMIN"],
+      },
+    ],
   },
 ];
