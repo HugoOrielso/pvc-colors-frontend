@@ -1,6 +1,7 @@
 import axiosClientPublic from "@/lib/axiosPublic";
 import axios from "axios";
 import axiosClient from "@/lib/axios";
+import { ProductByIdResponse } from "@/types/hooks/products/productbyid";
 
 export async function getPublicProducts(): Promise<ProductCardItem[]> {
   try {
@@ -32,8 +33,6 @@ export async function getPublicProducts(): Promise<ProductCardItem[]> {
     return [];
   }
 }
-
-
 
 export async function getProductByIdService(
   productId: string

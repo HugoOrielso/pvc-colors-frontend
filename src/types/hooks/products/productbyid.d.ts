@@ -50,25 +50,25 @@ export interface ProductLineById extends ProductLine {
 }
 
 interface ProductById {
-    id: string;
-    slug: string;
-    name: string;
-    description: string | null;
-    image: string | null;
-    recommendations: string | null;
-    technicalSheetUrl: string | null;
-    productLineId: string;
-    price: number;
-    stock: number;
-    isActive: boolean;
-    createdAt: string;
-    updatedAt: string;
+  id: string;
+  slug: string;
+  name: string;
+  description: string | null;
+  image: string | null;
+  recommendations: string | null;
+  technicalSheetUrl: string | null;
+  productLineId: string;
+  price: number;
+  stock: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
 
-    productLine: ProductLineById | null;
-    colors: ProductColorById[];
-    presentations: ProductPresentationById[];
+  productLine: ProductLineById | null;
+  colors: ProductColorById[];
+  presentations: ProductPresentationById[];
 }
 
 interface ProductByIdResponse {
-    data: ProductById;
+  data: ProductById;
 }

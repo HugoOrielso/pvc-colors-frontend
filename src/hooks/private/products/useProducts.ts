@@ -5,6 +5,7 @@ import {
   updateProductService,
 } from "@/services/private/products/products.service";
 import { toast } from "sonner";
+import { ProductByIdResponse } from "@/types/hooks/products/productbyid";
 
 
 export function useProduct(productId?: string) {
