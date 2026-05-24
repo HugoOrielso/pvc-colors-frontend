@@ -33,7 +33,7 @@ const PublicLines = () => {
                             Productos para cada superficie
                         </h2>
 
-                        <p className="my-3 max-w-xl text-sm leading-7 text-[#061540]/60">
+                        <p className="my-3  text-sm leading-7 text-[#061540]/60">
                             Selecciona una línea para ver sus productos, colores disponibles,
                             presentaciones y fichas técnicas.
                         </p>

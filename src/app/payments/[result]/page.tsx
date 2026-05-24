@@ -1,7 +1,4 @@
-"use client";
-
 import type { Metadata } from "next";
-
 import { Footer } from "@/components/home/Footer";
 import { Header } from "@/components/home/Header";
 import ResultadoContent from "@/components/result/result";

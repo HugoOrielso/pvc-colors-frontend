@@ -1,9 +1,6 @@
-"use client";
-
 import type { Metadata } from "next";
 
 import EditArticleForm from "@/components/articles/EditArticle";
-import { useParams } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Editar artículo",
@@ -12,9 +9,8 @@ export const metadata: Metadata = {
 };
 
 export default function EditArticlePage() {
-  const params = useParams();
 
   return (
-    <EditArticleForm articleId={params.id as string} />
+    <EditArticleForm />
   );
 }

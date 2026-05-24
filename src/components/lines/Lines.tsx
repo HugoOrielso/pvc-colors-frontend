@@ -120,7 +120,7 @@ export function Lines() {
                   Productos para cada superficie
                 </h2>
 
-                <p className="mt-5 max-w-xl text-sm font-light leading-relaxed text-slate-500 sm:text-base">
+                <p className="mt-5 text-sm font-light leading-relaxed text-slate-500 sm:text-base">
                   Selecciona una línea para ver sus productos, colores
                   disponibles, presentaciones y fichas técnicas.
                 </p>

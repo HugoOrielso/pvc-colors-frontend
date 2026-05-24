@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import {
     ArrowLeft,
     Save,
@@ -20,19 +20,17 @@ import {
     useUpdateArticle,
 } from "@/hooks/private/articles/useArticles";
 
-interface EditArticleFormProps {
-    articleId: string;
-}
 
-export default function EditArticleForm({
-    articleId,
-}: EditArticleFormProps) {
+export default function EditArticleForm() {
+    const params = useParams();
+    const id = params.id as string
+
     const router = useRouter();
 
     const { data: article, isLoading, isError } =
-        useArticleById(articleId);
+        useArticleById(id);
 
-    const updateMutation = useUpdateArticle(articleId);
+    const updateMutation = useUpdateArticle(id);
 
     const [title, setTitle] = useState("");
     const [markdown, setMarkdown] = useState("");

@@ -8,8 +8,7 @@ export default async function PublicLayout({
 }) {
   return (
     <>
-      <FloatingCart />
-      <FloatingContactForm />
+
       {children}
     </>
   )

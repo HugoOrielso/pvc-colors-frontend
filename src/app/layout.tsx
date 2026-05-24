@@ -4,6 +4,8 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import { QueryProvider } from "@/providers/QueryProvider";
 import { WompiScriptLoader } from "@/components/wompiLoader";
+import { FloatingCart } from "@/components/cart/FloatingCart";
+import { FloatingContactForm } from "@/components/contact/FloatingContactForm";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -33,7 +35,8 @@ export default function RootLayout({
 
       <body cz-shortcut-listen="true" suppressHydrationWarning className="min-h-full flex flex-col font-poppins ">
         <WompiScriptLoader />
-
+      <FloatingCart />
+      <FloatingContactForm />
         <Toaster richColors />
         <QueryProvider>{children}</QueryProvider>
       </body>

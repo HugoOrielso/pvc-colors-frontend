@@ -1,5 +1,3 @@
-// app/dashboard/articles/create/page.tsx
-
 import type { Metadata } from "next";
 
 import ArticleForm from "@/components/articles/CreateArticle";
