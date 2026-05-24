@@ -140,10 +140,6 @@ export function AprendeConPvc() {
                   className="group flex min-h-56 cursor-pointer flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6 text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#f0c040] hover:shadow-xl"
                 >
                   <div>
-                    <span className="mb-4 inline-flex rounded-full bg-[#f0c040]/15 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#061540]">
-                      Guía
-                    </span>
-
                     <h3 className="text-xl font-extrabold leading-tight text-[#061540]">
                       {item.title}
                     </h3>
