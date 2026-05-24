@@ -1,166 +1,103 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export interface CartItem extends ProductCardItem {
+export interface CartItem {
+  cartItemId: string;
+
+  productId: string;
+  productName: string;
+  productSlug?: string;
+  productImage?: string | null;
+
+  presentationId: string;
+  presentationName: string;
+  price: number;
+  stock: number;
+  sku?: string | null;
+
+  colorId?: string | null;
+  colorName?: string | null;
+  colorValue?: string | null;
+
   quantity: number;
 }
 
-export interface CheckoutFormData {
-  fullName: string;
-  documentType:
-    | "REGISTRO_CIVIL"
-    | "TARJETA_EXTRANJERIA"
-    | "CEDULA_CIUDADANIA"
-    | "CEDULA_EXTRANJERIA"
-    | "NIT"
-    | "PASAPORTE"
-    | "TARJETA_IDENTIDAD"
-    | "DNI"
-    | "CARTEIRA_IDENTIDADE"
-    | "OTRO"
-    | "";
-  documentNumber: string;
-  address: string;
-  email: string;
-  phone: string;
-  phonePrefix: string;
-  city: string;
-  department: string;
-  country: string;
-}
+export interface AddToCartInput {
+  productId: string;
+  productName: string;
+  productSlug?: string;
+  productImage?: string | null;
 
-export interface WompiSessionData {
-  sessionId: string;
-  deviceId: string;
-}
+  presentationId: string;
+  presentationName: string;
+  price: number;
+  stock: number;
+  sku?: string | null;
 
-export interface OrderSummary {
-  reference: string;
-  createdAt: string;
+  colorId?: string | null;
+  colorName?: string | null;
+  colorValue?: string | null;
+
+  quantity?: number;
 }
 
 interface CartState {
   cart: CartItem[];
   isOpen: boolean;
-  checkoutStep: "cart" | "checkout";
-  checkoutForm: CheckoutFormData;
-  wompiSession: WompiSessionData | null;
-  orderSummary: OrderSummary | null;
-  hasHydrated: boolean;
 
-  setHasHydrated: (value: boolean) => void;
-
-  openCart: () => void;
-  closeCart: () => void;
-  toggleCart: () => void;
-
-  goToCheckout: () => void;
-  goToCart: () => void;
-
-  setCheckoutField: (field: keyof CheckoutFormData, value: string) => void;
-  setCheckoutForm: (data: Partial<CheckoutFormData>) => void;
-  resetCheckoutForm: () => void;
-
-  setWompiSession: (data: WompiSessionData | null) => void;
-  setOrderSummary: (data: OrderSummary | null) => void;
-
-  addToCart: (product: ProductCardItem) => { ok: boolean; message?: string };
-  removeFromCart: (id: string) => void;
-  increaseQuantity: (id: string) => { ok: boolean; message?: string };
-  decreaseQuantity: (id: string) => void;
+  addToCart: (item: AddToCartInput) => { ok: boolean; message?: string };
+  removeFromCart: (cartItemId: string) => void;
+  increaseQuantity: (cartItemId: string) => { ok: boolean; message?: string };
+  decreaseQuantity: (cartItemId: string) => void;
   clearCart: () => void;
-  resetAll: () => void;
 
   totalItems: () => number;
   totalPrice: () => number;
+  openCart: () => void;
+  closeCart: () => void;
 }
 
-const initialCheckoutForm: CheckoutFormData = {
-  fullName: "",
-  documentType: "",
-  documentNumber: "",
-  address: "",
-  email: "",
-  phone: "",
-  phonePrefix: "+57",
-  city: "",
-  department: "",
-  country: "Colombia", // ← antes era "CO"
-};
+const buildCartItemId = (item: AddToCartInput) =>
+  `${item.productId}-${item.presentationId}-${item.colorId ?? "no-color"}`;
+
 export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
       cart: [],
       isOpen: false,
-      checkoutStep: "cart",
-      checkoutForm: initialCheckoutForm,
-      wompiSession: null,
-      orderSummary: null,
-      hasHydrated: false,
-
-      setHasHydrated: (value) => set({ hasHydrated: value }),
 
       openCart: () => set({ isOpen: true }),
+      closeCart: () => set({ isOpen: false }),
 
-      closeCart: () =>
-        set({
-          isOpen: false,
-          checkoutStep: "cart",
-        }),
+      addToCart: (item) => {
+        const quantityToAdd = item.quantity ?? 1;
 
-      toggleCart: () =>
-        set((state) => ({
-          isOpen: !state.isOpen,
-        })),
-
-      goToCheckout: () => set({ checkoutStep: "checkout" }),
-      goToCart: () => set({ checkoutStep: "cart" }),
-
-      setCheckoutField: (field, value) =>
-        set((state) => ({
-          checkoutForm: {
-            ...state.checkoutForm,
-            [field]: value,
-          },
-        })),
-
-      setCheckoutForm: (data) =>
-        set((state) => ({
-          checkoutForm: {
-            ...state.checkoutForm,
-            ...data,
-          },
-        })),
-
-      resetCheckoutForm: () => set({ checkoutForm: initialCheckoutForm }),
-
-      setWompiSession: (data) => set({ wompiSession: data }),
-
-      setOrderSummary: (data) => set({ orderSummary: data }),
-
-      addToCart: (product) => {
-        const existing = get().cart.find((item) => item.id === product.id);
-
-        if (product.stock <= 0) {
-          return {
-            ok: false,
-            message: "Este producto no tiene stock disponible.",
-          };
+        if (!item.presentationId) {
+          return { ok: false, message: "Selecciona una presentación." };
         }
 
+        if (item.stock <= 0) {
+          return { ok: false, message: "Este producto no tiene stock disponible." };
+        }
+
+        const cartItemId = buildCartItemId(item);
+        const existing = get().cart.find((p) => p.cartItemId === cartItemId);
+
         if (existing) {
-          if (existing.quantity >= product.stock) {
+          const nextQuantity = existing.quantity + quantityToAdd;
+
+          if (nextQuantity > existing.stock) {
             return {
               ok: false,
-              message: `Solo hay ${product.stock} unidades disponibles.`,
+              message: `Solo hay ${existing.stock} unidades disponibles.`,
             };
           }
 
           set((state) => ({
-            cart: state.cart.map((item) =>
-              item.id === product.id
-                ? { ...item, quantity: item.quantity + 1 }
-                : item
+            cart: state.cart.map((p) =>
+              p.cartItemId === cartItemId
+                ? { ...p, quantity: nextQuantity }
+                : p
             ),
             isOpen: true,
           }));
@@ -168,27 +105,38 @@ export const useCartStore = create<CartState>()(
           return { ok: true };
         }
 
+        if (quantityToAdd > item.stock) {
+          return {
+            ok: false,
+            message: `Solo hay ${item.stock} unidades disponibles.`,
+          };
+        }
+
         set((state) => ({
-          cart: [...state.cart, { ...product, quantity: 1 }],
+          cart: [
+            ...state.cart,
+            {
+              cartItemId,
+              ...item,
+              quantity: quantityToAdd,
+            },
+          ],
           isOpen: true,
         }));
 
         return { ok: true };
       },
 
-      removeFromCart: (id) =>
+      removeFromCart: (cartItemId) =>
         set((state) => ({
-          cart: state.cart.filter((item) => item.id !== id),
+          cart: state.cart.filter((item) => item.cartItemId !== cartItemId),
         })),
 
-      increaseQuantity: (id) => {
-        const item = get().cart.find((product) => product.id === id);
+      increaseQuantity: (cartItemId) => {
+        const item = get().cart.find((p) => p.cartItemId === cartItemId);
 
         if (!item) {
-          return {
-            ok: false,
-            message: "Producto no encontrado en el carrito.",
-          };
+          return { ok: false, message: "Producto no encontrado." };
         }
 
         if (item.quantity >= item.stock) {
@@ -199,40 +147,28 @@ export const useCartStore = create<CartState>()(
         }
 
         set((state) => ({
-          cart: state.cart.map((product) =>
-            product.id === id
-              ? { ...product, quantity: product.quantity + 1 }
-              : product
+          cart: state.cart.map((p) =>
+            p.cartItemId === cartItemId
+              ? { ...p, quantity: p.quantity + 1 }
+              : p
           ),
         }));
 
         return { ok: true };
       },
 
-      decreaseQuantity: (id) =>
+      decreaseQuantity: (cartItemId) =>
         set((state) => ({
           cart: state.cart
             .map((item) =>
-              item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+              item.cartItemId === cartItemId
+                ? { ...item, quantity: item.quantity - 1 }
+                : item
             )
             .filter((item) => item.quantity > 0),
         })),
 
-      clearCart: () =>
-        set({
-          cart: [],
-          checkoutStep: "cart",
-        }),
-
-      resetAll: () =>
-        set({
-          cart: [],
-          isOpen: false,
-          checkoutStep: "cart",
-          checkoutForm: initialCheckoutForm,
-          wompiSession: null,
-          orderSummary: null,
-        }),
+      clearCart: () => set({ cart: [] }),
 
       totalItems: () =>
         get().cart.reduce((acc, item) => acc + item.quantity, 0),
@@ -244,11 +180,7 @@ export const useCartStore = create<CartState>()(
       name: "cart-storage",
       partialize: (state) => ({
         cart: state.cart,
-        checkoutForm: state.checkoutForm,
       }),
-      onRehydrateStorage: () => (state) => {
-        state?.setHasHydrated(true);
-      },
     }
   )
 );

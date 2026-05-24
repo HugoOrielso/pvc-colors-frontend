@@ -1,4 +1,10 @@
 import AdminOverview from "@/components/dashboard/AdminOverView";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dashboard | PVC Colors",
+  description: "Panel administrativo de PVC Colors.",
+};
 
 export default function DashboardPage() {
   return (

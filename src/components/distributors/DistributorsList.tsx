@@ -11,7 +11,7 @@ import {
 
 import { useDistributors } from "@/hooks/private/distributors/useDistributors";
 
-export default function DistributorList() {
+export function DistributorList() {
   const router = useRouter();
 
   const { data, isLoading, isError } = useDistributors();
@@ -37,7 +37,7 @@ export default function DistributorList() {
   }
 
   return (
-    <section className="space-y-8">
+    <section className="space-y-8 p-4">
       <div className="flex items-center justify-between rounded-3xl border bg-white p-6 shadow-sm">
         <div>
           <h1 className="text-2xl font-semibold text-slate-950">

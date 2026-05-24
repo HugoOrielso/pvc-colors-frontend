@@ -1,40 +1,13 @@
-"use client";
+import type { Metadata } from "next";
 
-import { useParams } from "next/navigation";
+import { EditDistributorForm } from "@/components/distributors/EditDistributors";
 
-
-import { useDistributorById } from "@/hooks/private/distributors/useDistributors";
-import DistributorForm from "@/components/distributors/DistributorsForm";
+export const metadata: Metadata = {
+  title: "Editar distribuidor",
+  description:
+    "Actualiza la información comercial, ubicación y datos de contacto de un distribuidor autorizado de PVC Colors.",
+};
 
 export default function EditDistributorPage() {
-  const params = useParams();
-
-  const id = params.id as string;
-
-  const { data, isLoading, isError } =
-    useDistributorById(id);
-
-  if (isLoading) {
-    return <p>Cargando distribuidor...</p>;
-  }
-
-  if (isError || !data) {
-    return <p>No se pudo cargar el distribuidor.</p>;
-  }
-
-  return (
-    <DistributorForm
-      distributorId={data.id}
-      initialData={{
-        name: data.name,
-        city: data.city,
-        address: data.address,
-        phone: data.phone,
-        whatsapp: data.whatsapp,
-        keyword: data.keyword,
-        lat: data.lat,
-        lng: data.lng,
-      }}
-    />
-  );
+  return <EditDistributorForm />;
 }

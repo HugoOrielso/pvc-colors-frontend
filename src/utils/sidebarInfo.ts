@@ -16,13 +16,15 @@ import {
   PackagePlus,
   Boxes,
   Layers,
-  Receipt,
   PlusCircle,
   BookOpenCheck,
   SquareLibrary,
   TruckElectric,
   Truck,
-  BusFront, 
+  BusFront,
+  ReceiptText,
+  FileText,
+  ShoppingCart,
 } from "lucide-react";
 
 export const links: SidebarLink[] = [
@@ -75,8 +77,22 @@ export const links: SidebarLink[] = [
   {
     href: "/dashboard/invoices",
     label: "Facturas",
-    icon: Receipt,
+    icon: ReceiptText, // sección principal de facturación
     roles: ["ADMIN", "OPERATOR"],
+    children: [
+      {
+        href: "/dashboard/invoices",
+        label: "Ver facturas",
+        icon: FileText, // listado/documentos
+        roles: ["ADMIN", "OPERATOR"],
+      },
+      {
+        href: "/dashboard/orders",
+        label: "Ver órdenes",
+        icon: ShoppingCart, // órdenes/compras
+        roles: ["ADMIN"],
+      },
+    ],
   },
   {
     href: "/dashboard/articles",
@@ -98,7 +114,7 @@ export const links: SidebarLink[] = [
       },
     ],
   },
-    {
+  {
     href: "/dashboard/distributors",
     label: "Distribuidores",
     icon: BusFront,

@@ -4,7 +4,7 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const nextConfig: NextConfig = {
   output: "standalone",
-
+  allowedDevOrigins: ['theaceous-indorsable-lilliana.ngrok-free.dev'],
   images: {
     remotePatterns: [
       {

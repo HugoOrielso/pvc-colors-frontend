@@ -23,6 +23,8 @@ import { Footer } from "@/components/home/Footer";
 import { useProductByIdPublic } from "@/hooks/public/products/usePublicProducts";
 import { ColorGroupModal } from "../inventory/ColorGroupModal";
 import { ProductCalculatorModal } from "./calculatorModal";
+import { useCartStore } from "@/store/cart-store";
+import { toast } from "sonner";
 
 interface ProductDetailPageProps {
   id: string;
@@ -37,7 +39,7 @@ const formatPrice = (price: number) =>
 
 export default function ProductDetailPage({ id }: ProductDetailPageProps) {
   const { data: product, isLoading } = useProductByIdPublic(id);
-
+  const addToCart = useCartStore((state) => state.addToCart);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
   const [selectedColorId, setSelectedColorId] = useState<string | null>(null);
@@ -133,9 +135,9 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
     );
   }
 
-  if (!product) {
+  if (!product) {   
     return (
-      <main className="min-h-screen bg-[#f4f5f9]">
+      <div className="min-h-screen bg-[#f4f5f9] grid grid-rows-[auto_1fr_auto]">
         <Header />
         <section className="mx-auto max-w-4xl px-5 py-24 text-center">
           <h1 className="text-3xl font-black text-[#061540]">
@@ -150,7 +152,7 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
           </Link>
         </section>
         <Footer />
-      </main>
+      </div>
     );
   }
 
@@ -213,10 +215,48 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
           <button
             type="button"
             disabled={isOutOfStock}
+            onClick={() => {
+              if (!selectedPresentation) {
+                toast.error("Selecciona una presentación.");
+                return;
+              }
+
+              if ((hasColors || hasGroups) && !selectedColor) {
+                toast.error("Selecciona un color.");
+                return;
+              }
+
+              const result = addToCart({
+                productId: product.id,
+                productName: product.name,
+                productSlug: product.slug,
+                productImage: mainImage,
+
+                presentationId: selectedPresentation.id,
+                presentationName: selectedPresentation.name,
+                price: selectedPresentation.price,
+                stock: selectedPresentation.stock,
+                sku: selectedPresentation.sku,
+
+                colorId: selectedColor?.id ?? null,
+                colorName: selectedColor?.name ?? null,
+                colorValue: selectedColor?.value ?? null,
+
+                quantity,
+              });
+
+              if (!result.ok) {
+                toast.error(result.message);
+                return;
+              }
+
+              toast.success("Producto agregado al carrito.");
+              setQuantity(1);
+            }}
             className="inline-flex h-12 flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#35c791] text-base font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50"
           >
             <ShoppingCart size={18} />
-            Comprar
+            Agregar al carrito
           </button>
         </div>
 
