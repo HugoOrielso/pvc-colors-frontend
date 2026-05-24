@@ -7,9 +7,10 @@ export default async function PublicLayout({
   children: React.ReactNode
 }) {
   return (
-    <>
-
+    <div>
+      <FloatingCart />
+      <FloatingContactForm />
       {children}
-    </>
+    </div>
   )
 }

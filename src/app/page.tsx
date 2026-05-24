@@ -4,6 +4,8 @@ import PublicLines from "@/components/home/PublicLines";
 import { HeroSlider } from "@/components/home/HeroSlider";
 import { Header } from "@/components/home/Header";
 import { Footer } from "@/components/home/Footer";
+import { FloatingCart } from "@/components/cart/FloatingCart";
+import { FloatingContactForm } from "@/components/contact/FloatingContactForm";
 
 export const metadata: Metadata = {
   title: "PVC Colors | Pinturas, recubrimientos y productos especializados",
@@ -36,6 +38,8 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <main className="pvc-page min-h-screen bg-white text-[#061540]">
+      <FloatingCart />
+      <FloatingContactForm />
       <Header />
 
       <HeroSlider />

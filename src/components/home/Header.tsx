@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, MonitorCog, X } from "lucide-react";
+import { Calculator, Menu, MonitorCog, X } from "lucide-react";
 import { Separator } from "../ui/separator";
 
 export const Header = () => {
@@ -51,6 +51,13 @@ export const Header = () => {
 
         <div className="hidden items-center gap-3 lg:flex">
           <Link
+            href="/calculator"
+            className="inline-flex items-center gap-2 rounded-xl border border-[#08206b]/15 bg-white px-5 py-2.5 text-[13px] font-bold text-[#08206b] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#08206b] hover:bg-[#f8fafc] hover:shadow-lg"
+          >
+            <Calculator size={16} />
+            Calculadora
+          </Link>
+          <Link
             href="/login"
             className="inline-flex items-center gap-2 rounded-xl border border-[#08206b]/15 bg-white px-5 py-2.5 text-[13px] font-bold text-[#08206b] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#08206b] hover:bg-[#f8fafc] hover:shadow-lg"
           >
@@ -85,6 +92,14 @@ export const Header = () => {
             ))}
 
             <div className="mt-3 grid gap-3 border-t border-slate-100 pt-4 ">
+              <Link
+                href="/calculator"
+                onClick={closeMenu}
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#08206b]/15 bg-white px-5 py-3 text-sm font-bold text-[#08206b] transition hover:border-[#08206b] hover:bg-slate-50"
+              >
+                <Calculator size={16} />
+                Calculadora
+              </Link>
 
               <Link
                 href="/login"
