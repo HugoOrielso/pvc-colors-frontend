@@ -1,6 +1,6 @@
 
 
-export type UserRole = "ADMIN" | "OPERATOR";
+export type UserRole = "ADMIN" | "OPERATOR" | "GERENT";
 
 export type SidebarLink = {
   href: string;
@@ -32,25 +32,25 @@ export const links: SidebarLink[] = [
     href: "/dashboard",
     label: "Dashboard",
     icon: LayoutDashboard,
-    roles: ["ADMIN", "OPERATOR"],
+    roles: ["ADMIN", "OPERATOR", "GERENT"],
   },
   {
     href: "/dashboard/products",
     label: "Inventario",
     icon: Boxes,
-    roles: ["ADMIN", "OPERATOR"],
+    roles: ["ADMIN", "OPERATOR", "GERENT"],
     children: [
       {
         href: "/dashboard/products",
         label: "Ver productos",
         icon: ClipboardList,
-        roles: ["ADMIN", "OPERATOR"],
+        roles: ["ADMIN", "OPERATOR", "GERENT"],
       },
       {
         href: "/dashboard/products/create",
         label: "Crear producto",
         icon: PackagePlus,
-        roles: ["ADMIN"],
+        roles: ["ADMIN", "GERENT"],
       },
     ],
   },
@@ -58,19 +58,19 @@ export const links: SidebarLink[] = [
     href: "/dashboard/lines",
     label: "Líneas",
     icon: Layers,
-    roles: ["ADMIN", "OPERATOR"],
+    roles: ["ADMIN", "OPERATOR", "GERENT"],
     children: [
       {
         href: "/dashboard/lines",
         label: "Ver líneas",
         icon: ClipboardList, // listado → consistente con productos
-        roles: ["ADMIN", "OPERATOR"],
+        roles: ["ADMIN", "OPERATOR", "GERENT"],
       },
       {
         href: "/dashboard/lines/create",
         label: "Crear línea",
         icon: PlusCircle, // 🔥 acción clara
-        roles: ["ADMIN"],
+        roles: ["ADMIN", "GERENT"],
       },
     ],
   },
@@ -78,19 +78,19 @@ export const links: SidebarLink[] = [
     href: "/dashboard/invoices",
     label: "Facturas",
     icon: ReceiptText, // sección principal de facturación
-    roles: ["ADMIN", "OPERATOR"],
+    roles: ["ADMIN", "OPERATOR", "GERENT"],
     children: [
       {
         href: "/dashboard/invoices",
         label: "Ver facturas",
         icon: FileText, // listado/documentos
-        roles: ["ADMIN", "OPERATOR"],
+        roles: ["ADMIN", "OPERATOR", "GERENT"],
       },
       {
         href: "/dashboard/orders",
         label: "Ver órdenes",
         icon: ShoppingCart, // órdenes/compras
-        roles: ["ADMIN"],
+        roles: ["ADMIN", "GERENT"],
       },
     ],
   },

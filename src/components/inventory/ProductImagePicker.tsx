@@ -35,7 +35,6 @@ export function ProductImagesPicker({
   const [imageToDeleteIndex, setImageToDeleteIndex] = useState<number | null>(null);
   async function confirmDeleteImage() {
     if (imageToDeleteIndex === null) return;
-    console.log(imageToDeleteIndex)
     await removeImage(imageToDeleteIndex);
     setImageToDeleteIndex(null);
   }
@@ -75,12 +74,10 @@ export function ProductImagesPicker({
   }
 
   async function removeImage(index: number) {
-    console.log(index)
     const imageToRemove = value[index];
 
     // si ya existe en DB la desactivamos
     if (imageToRemove.id) {
-      console.log(imageToRemove)
       await deleteImage({
         productId,
         imageId: imageToRemove.id,

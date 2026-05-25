@@ -9,7 +9,6 @@ import {
   CheckCircle2,
   ChevronRight,
   Download,
-  FileText,
   Minus,
   Package,
   Plus,
@@ -153,7 +152,7 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-[#f4f5f9] grid grid-rows-[auto_1fr_auto]">
+      <div className="min-h-screen  grid grid-rows-[auto_1fr_auto]">
         <Header />
         <section className="mx-auto max-w-4xl px-5 py-24 text-center">
           <h1 className="text-3xl font-black text-[#061540]">
@@ -278,18 +277,10 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
 
 
 
-        {product.technicalSheetUrl && (
-          <a
-            href={product.technicalSheetUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-4 inline-flex items-center gap-2 text-xs font-bold text-[#061540]/50 transition hover:text-[#061540]"
-          >
-            <Download size={14} />
-            Descargar ficha técnica
-          </a>
-        )}
+
       </div>
+
+
     );
   };
 
@@ -298,31 +289,8 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
       <Header />
 
       <div>
-        <section className="border-b border-[#061540]/8 bg-white/80 backdrop-blur-sm">
-          <div className="mx-auto max-w-7xl px-5 py-4">
-            <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#061540]/35">
-              <Link href="/" className="transition hover:text-[#061540]/70">
-                Home
-              </Link>
-              <span className="text-[#061540]/20">›</span>
-              <Link href="/lines" className="transition hover:text-[#061540]/70">
-                Líneas
-              </Link>
-              <span className="text-[#061540]/20">›</span>
-              <Link
-                href={lineHref}
-                className="transition hover:text-[#061540]/70"
-              >
-                {lineName}
-              </Link>
-              <span className="text-[#061540]/20">›</span>
-              <span className="text-[#061540]/55">{product.name}</span>
-            </div>
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-7xl px-5 py-8">
-          <div className="mb-8 flex flex-wrap items-center gap-3">
+        <section className="mx-auto max-w-7xl p-4">
+          <div className="mb-4 flex flex-wrap items-center gap-3">
             <Link
               href={lineHref}
               className="inline-flex items-center gap-1.5 rounded-lg border border-[#061540]/12 bg-white px-4 py-2 text-xs font-bold uppercase tracking-wide text-[#061540] shadow-sm transition hover:bg-[#061540] hover:text-white"
@@ -361,6 +329,7 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
                 </div>
               </ViewTransition>
 
+
               {gallery.length > 1 && (
                 <div className="flex gap-3">
                   {gallery.map((image) => (
@@ -384,6 +353,8 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
                   ))}
                 </div>
               )}
+
+
 
               {product.features && product.features.length > 0 && (
                 <div className="overflow-hidden rounded-2xl border border-[#061540]/8 bg-white shadow-sm">
@@ -595,15 +566,26 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
                 Calcula cuánto producto necesitas
               </button>
               {renderPurchaseCard("")}
+              {product.technicalSheetUrl && (
+                <a
+                  href={product.technicalSheetUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-[#061540]/10 bg-[#f4f5f9] text-sm font-black text-[#061540] transition hover:bg-[#061540] hover:text-white mb-4 cursor-pointer"
+                >
+                  <Download size={18} />
+                  Descargar ficha técnica
+                </a>
+              )}
             </aside>
           </div>
         </section>
 
         {product.recommendations && (
-          <section className="mx-auto max-w-7xl px-5 pb-16">
+          <section className="mx-auto max-w-7xl py-10">
             <div className="overflow-hidden rounded-3xl border border-[#061540]/8 bg-white shadow-sm">
               <div className="grid gap-0 lg:grid-cols-[280px_1fr]">
-                <div className="flex flex-col justify-center border-b border-[#061540]/8 bg-[#061540] p-8 lg:border-b-0 lg:border-r lg:border-r-transparent">
+                <div className="flex flex-col items-center justify-center border-b border-[#061540]/8 bg-[#061540] p-4 lg:border-b-0 lg:border-r lg:border-r-transparent">
                   <span className="mb-4 inline-flex w-fit items-center gap-2 rounded-full bg-[#eeff00] px-4 py-1.5 text-xs font-black uppercase tracking-wide text-[#061540]">
                     <Sparkles size={12} />
                     Uso recomendado
@@ -614,12 +596,7 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
                   </h2>
                 </div>
 
-                <div className="flex items-start gap-4 p-8">
-                  <FileText
-                    className="mt-0.5 shrink-0 text-[#061540]/30"
-                    size={22}
-                  />
-
+                <div className="flex items-start gap-4 p-4">
                   <p className="text-[15px] leading-7 text-[#061540]/75">
                     {product.recommendations}
                   </p>

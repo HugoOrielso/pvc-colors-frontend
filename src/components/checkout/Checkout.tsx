@@ -9,6 +9,8 @@ import { useCartStore } from "@/store/cart-store";
 import { useCreateWompiCheckout } from "@/hooks/public/checkout/useCheckoutWompi";
 import { Header } from "@/components/home/Header";
 import { Footer } from "@/components/home/Footer";
+import { DepartmentSelect } from "./DepartmentSelect";
+import { TermsAndConditions } from "../conditions/Conditions";
 
 const formatPrice = (price: number) =>
     new Intl.NumberFormat("es-CO", {
@@ -17,19 +19,23 @@ const formatPrice = (price: number) =>
         maximumFractionDigits: 0,
     }).format(price);
 
+
+
 const documentTypes = [
     { value: "CEDULA_CIUDADANIA", label: "Cédula de ciudadanía" },
     { value: "CEDULA_EXTRANJERIA", label: "Cédula de extranjería" },
     { value: "NIT", label: "NIT" },
     { value: "PASAPORTE", label: "Pasaporte" },
     { value: "TARJETA_IDENTIDAD", label: "Tarjeta de identidad" },
+    { value: "PPT_PERMISO_DE_PROTECCION_TEMPORAL", label: "PPT - Permiso de Protección Temporal" },
     { value: "OTRO", label: "Otro" },
 ];
 
 export function Checkout() {
     const { cart, totalPrice, clearCart } = useCartStore();
     const { mutateAsync, isPending } = useCreateWompiCheckout();
-
+    const [acceptedTerms, setAcceptedTerms] = useState(false);
+    const [isTermsOpen, setIsTermsOpen] = useState(false);
     const [form, setForm] = useState({
         fullName: "",
         documentType: "CEDULA_CIUDADANIA",
@@ -176,9 +182,7 @@ export function Checkout() {
                                     value={form.city}
                                     onChange={(value) => updateField("city", value)}
                                 />
-
-                                <Input
-                                    label="Departamento"
+                                <DepartmentSelect
                                     value={form.department}
                                     onChange={(value) => updateField("department", value)}
                                 />
@@ -190,9 +194,32 @@ export function Checkout() {
                                 />
                             </div>
 
+                            <div className="mt-8 rounded-2xl border border-[#061540]/10 bg-[#f4f5f9] p-4">
+                                <label className="flex items-start gap-3">
+                                    <input
+                                        type="checkbox"
+                                        checked={acceptedTerms}
+                                        onChange={(e) => setAcceptedTerms(e.target.checked)}
+                                        className="mt-1 h-4 w-4 rounded border-[#061540]/20 text-[#061540] focus:ring-[#061540]"
+                                    />
+
+                                    <span className="text-sm leading-relaxed text-[#061540]/75">
+                                        He leído y acepto los{" "}
+                                        <button
+                                            type="button"
+                                            onClick={() => setIsTermsOpen(true)}
+                                            className="font-black text-[#061540] underline underline-offset-2 hover:text-[#0b2366] cursor-pointer"
+                                        >
+                                            términos y condiciones
+                                        </button>{" "}
+                                        y la política de tratamiento de datos personales.
+                                    </span>
+                                </label>
+                            </div>
+
                             <button
                                 type="submit"
-                                disabled={isPending}
+                                disabled={isPending || !acceptedTerms}
                                 className="mt-8 flex h-13 w-full items-center justify-center gap-2 rounded-xl bg-[#35c791] text-sm font-black text-white transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
                             >
                                 {isPending && <Loader2 className="animate-spin" size={18} />}
@@ -255,6 +282,37 @@ export function Checkout() {
                     </div>
                 </section>
             </main>
+
+            {isTermsOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
+                    <div className="relative max-h-[90vh] w-full max-w-5xl overflow-hidden rounded-3xl bg-white shadow-2xl">
+
+                        <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4">
+                            <div>
+                                <p className="text-xs font-black uppercase tracking-[0.2em] text-[#061540]">
+                                    PVC Colors
+                                </p>
+
+                                <h2 className="text-2xl font-black text-[#061540]">
+                                    Términos y condiciones
+                                </h2>
+                            </div>
+
+                            <button
+                                type="button"
+                                onClick={() => setIsTermsOpen(false)}
+                                className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-xl font-black text-[#061540] transition hover:bg-slate-200 cursor-pointer"
+                            >
+                                ×
+                            </button>
+                        </div>
+
+                        <div className="max-h-[75vh] overflow-y-auto px-6 py-6">
+                            <TermsAndConditions />
+                        </div>
+                    </div>
+                </div>
+            )}
             <Footer />
         </>
     );

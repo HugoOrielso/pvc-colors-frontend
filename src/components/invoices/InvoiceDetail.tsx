@@ -26,7 +26,6 @@ export default function DashboardInvoiceDetailPage() {
 
   const { data: invoice, isLoading, isError } =
     useInvoiceByInvoiceNumber(invoiceNumber);
-  console.log(invoice)
   if (isLoading) {
     return (
       <main className="rounded-3xl bg-white p-8 shadow-sm">
@@ -52,7 +51,6 @@ export default function DashboardInvoiceDetailPage() {
 
   const customer = invoice.order?.customer;
   const items = invoice.order?.items ?? [];
-  console.log(invoice.order.status)
   return (
     <main className="space-y-6 p-4">
       <Link

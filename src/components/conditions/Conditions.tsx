@@ -1,7 +1,7 @@
 export  function TermsAndConditions() {
   return (
-    <main className="min-h-screen bg-slate-50 px-4 py-10 text-slate-800">
-      <section className="mx-auto max-w-5xl rounded-2xl bg-white p-6 shadow-sm md:p-10">
+    <main className="pvc-page min-h-screen bg-slate-50 px-4 py-10 text-slate-800">
+      <section className="fade-up mx-auto max-w-5xl rounded-2xl bg-white p-6 shadow-sm md:p-10">
         <div className="mb-10 border-b pb-6">
           <p className="mb-2 text-sm font-semibold uppercase tracking-wide text-blue-700">
             PVC Colors

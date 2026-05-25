@@ -24,7 +24,6 @@ export function ProductColorsPicker({
     value,
     onChange,
 }: Props) {
-    console.log(value)
     const params = useParams();
     const productId = params.id as string;
 
@@ -63,12 +62,8 @@ export function ProductColorsPicker({
 
     async function removeColor(index: number) {
         const colorToRemove = value[index];
-        console.log("asidjsdaijij")
-        console.log("COLOR TO REMOVE:", colorToRemove);
-        console.log("PRODUCT ID:", productId);
 
         if (!colorToRemove?.id) {
-            console.log("Este color no tiene id, no se llama la API");
             onChange(value.filter((_, i) => i !== index));
             return;
         }
