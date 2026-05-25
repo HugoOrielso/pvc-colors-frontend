@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <div className="min-h-scree">
+    <div className="min-h-screen">
         <Checkout />
     </div>
   );

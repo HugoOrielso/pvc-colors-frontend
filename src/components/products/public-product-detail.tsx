@@ -37,6 +37,22 @@ const formatPrice = (price: number) =>
     maximumFractionDigits: 0,
   }).format(price);
 
+const isLightColor = (hex: string): boolean => {
+  let color = hex.replace("#", "");
+
+  // Expandir formato corto #fff → ffffff
+  if (color.length === 3) {
+    color = color.split("").map((c) => c + c).join("");
+  }
+
+  const r = parseInt(color.substring(0, 2), 16);
+  const g = parseInt(color.substring(2, 4), 16);
+  const b = parseInt(color.substring(4, 6), 16);
+
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luminance > 0.85;
+};
+
 export default function ProductDetailPage({ id }: ProductDetailPageProps) {
   const { data: product, isLoading } = useProductByIdPublic(id);
   const addToCart = useCartStore((state) => state.addToCart);
@@ -135,7 +151,7 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
     );
   }
 
-  if (!product) {   
+  if (!product) {
     return (
       <div className="min-h-screen bg-[#f4f5f9] grid grid-rows-[auto_1fr_auto]">
         <Header />
@@ -440,7 +456,9 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
                           title={color.name ?? color.value}
                           className={`relative h-12 w-12 rounded-2xl border-2 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${isSelected
                             ? "scale-110 border-[#061540] shadow-lg"
-                            : "border-transparent hover:border-[#061540]/20"
+                            : isLightColor(color.value)
+                              ? "border-[#061540]/25 hover:border-[#061540]/50"
+                              : "border-transparent hover:border-[#061540]/20"
                             }`}
                           style={{ backgroundColor: color.value }}
                         >
