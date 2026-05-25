@@ -2,13 +2,13 @@
 
 import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { Loader2 } from "lucide-react";
-import Image from "next/image";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
 
 import { Input } from "@/components/ui/input";
 import { useProductById } from "@/hooks/private/products/useProductById";
 import { useUpdateProduct } from "@/hooks/private/products/useUpdateProduct";
+import { ProductImagesManager } from "../products/productImagesManager";
 
 type ColorForm = {
     name: string;
@@ -211,74 +211,6 @@ export default function UpdateProductForm() {
         }));
     }
 
-    function handleImagesChange(e: ChangeEvent<HTMLInputElement>) {
-        const files = Array.from(e.target.files ?? []);
-
-        if (!files.length) return;
-
-        const allowedTypes = [
-            "image/png",
-            "image/jpeg",
-            "image/jpg",
-            "image/webp",
-        ];
-
-        const invalidFile = files.find(
-            (file) => !allowedTypes.includes(file.type)
-        );
-
-        if (invalidFile) {
-            toast.error("Solo se permiten imágenes PNG, JPG o WEBP");
-            e.target.value = "";
-            return;
-        }
-
-        const newImages: ImageForm[] = files.map((file) => ({
-            file,
-            preview: URL.createObjectURL(file),
-            alt: file.name,
-            isMain: false,
-        }));
-
-        setImages((prev) => {
-            const next = [...prev, ...newImages];
-
-            if (!next.some((image) => image.isMain) && next.length > 0) {
-                next[0].isMain = true;
-            }
-
-            return next;
-        });
-
-        e.target.value = "";
-    }
-
-    function removeImage(index: number) {
-        setImages((prev) => {
-            const imageToRemove = prev[index];
-
-            if (imageToRemove.file && imageToRemove.preview) {
-                URL.revokeObjectURL(imageToRemove.preview);
-            }
-
-            const next = prev.filter((_, i) => i !== index);
-
-            if (!next.some((image) => image.isMain) && next.length > 0) {
-                next[0].isMain = true;
-            }
-
-            return next;
-        });
-    }
-
-    function setMainImage(index: number) {
-        setImages((prev) =>
-            prev.map((image, i) => ({
-                ...image,
-                isMain: i === index,
-            }))
-        );
-    }
 
     function handleTechnicalSheetChange(e: ChangeEvent<HTMLInputElement>) {
         const file = e.target.files?.[0] ?? null;
@@ -686,72 +618,11 @@ export default function UpdateProductForm() {
                     </div>
                 </div>
 
-                <div>
-                    <label className="mb-2 block text-xs font-semibold uppercase text-blue-700">
-                        Imágenes del producto
-                    </label>
-
-                    <label className="flex h-32 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 transition hover:border-blue-500 hover:bg-blue-50">
-                        <span className="text-sm font-semibold text-slate-700">
-                            Agregar imágenes
-                        </span>
-
-                        <span className="mt-1 text-xs text-slate-500">
-                            PNG, JPG o WEBP
-                        </span>
-
-                        <input
-                            type="file"
-                            multiple
-                            accept="image/png,image/jpeg,image/jpg,image/webp"
-                            onChange={handleImagesChange}
-                            className="hidden"
-                        />
-                    </label>
-                </div>
-
-                {images.length > 0 && (
-                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 md:grid-cols-6">
-                        {images.map((image, index) => (
-                            <div
-                                key={image.id ?? image.preview}
-                                className="group relative overflow-hidden rounded-xl border bg-white"
-                            >
-                                <Image
-                                    src={image.preview}
-                                    width={160}
-                                    height={160}
-                                    alt={image.alt ?? `Imagen producto ${index + 1}`}
-                                    className="h-32 w-full object-cover"
-                                />
-
-                                {image.isMain && (
-                                    <span className="absolute left-2 top-2 rounded-full bg-blue-700 px-2 py-1 text-[10px] font-bold text-white">
-                                        Principal
-                                    </span>
-                                )}
-
-                                <div className="absolute bottom-2 left-2 right-2 flex gap-1 opacity-0 transition group-hover:opacity-100">
-                                    <button
-                                        type="button"
-                                        onClick={() => setMainImage(index)}
-                                        className="flex-1 rounded-lg bg-blue-700 px-2 py-1 text-[10px] font-semibold text-white"
-                                    >
-                                        Principal
-                                    </button>
-
-                                    <button
-                                        type="button"
-                                        onClick={() => removeImage(index)}
-                                        className="rounded-lg bg-black/80 px-2 py-1 text-[10px] font-semibold text-white"
-                                    >
-                                        Quitar
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
+                <ProductImagesManager
+                    productId={productId}
+                    images={images}
+                    setImages={setImages}
+                />
 
                 <div>
                     <label className="mb-2 block text-xs font-semibold uppercase text-blue-700">
