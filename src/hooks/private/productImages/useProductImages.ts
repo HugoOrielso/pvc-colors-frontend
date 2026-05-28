@@ -53,7 +53,7 @@ export const useSetMainProductImage = (productId: string) => {
 
     onSuccess: () => {
       toast.success("Imagen principal actualizada");
-
+      setTimeout(() => { location.reload() }, 350)
       queryClient.invalidateQueries({
         queryKey: ["product-by-id", productId],
       });
@@ -62,7 +62,7 @@ export const useSetMainProductImage = (productId: string) => {
     onError: (error) => {
       toast.error(
         error.response?.data?.message ||
-          "Error actualizando la imagen principal"
+        "Error actualizando la imagen principal"
       );
     },
   });
@@ -80,6 +80,7 @@ export const useDeactivateProductImage = (productId: string) => {
 
     onSuccess: () => {
       toast.success("Imagen desactivada");
+      setTimeout(() => { location.reload() }, 350)
 
       queryClient.invalidateQueries({
         queryKey: ["product-by-id", productId],
@@ -87,6 +88,7 @@ export const useDeactivateProductImage = (productId: string) => {
     },
 
     onError: (error) => {
+
       toast.error(
         error.response?.data?.message || "Error desactivando la imagen"
       );
@@ -107,6 +109,7 @@ export const useReplaceProductImage = (productId: string) => {
 
     onSuccess: () => {
       toast.success("Imagen reemplazada correctamente");
+      setTimeout(() => { location.reload() }, 350)
 
       queryClient.invalidateQueries({
         queryKey: ["product-by-id", productId],
@@ -116,7 +119,7 @@ export const useReplaceProductImage = (productId: string) => {
     onError: (error) => {
       toast.error(
         error.response?.data?.message ||
-          "Error reemplazando la imagen"
+        "Error reemplazando la imagen"
       );
     },
   });
