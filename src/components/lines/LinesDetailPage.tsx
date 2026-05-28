@@ -16,6 +16,7 @@ import { Footer } from "@/components/home/Footer";
 import { useParams } from "next/navigation";
 import { useProductLineByIdPublic } from "@/hooks/public/lines/usePublicLines";
 import { ViewTransition } from "react";
+import PvcRecommendationsSlider from "./Recomendations";
 
 export default function LineDetailPage() {
     const params = useParams();
@@ -194,15 +195,15 @@ export default function LineDetailPage() {
                                                         sizes="(max-width: 668px) 100vw, 28vw"
                                                     />
 
-                                                    <div className="absolute inset-0 bg-linear-to-t from-[#061540]/80 via-[#061540]/15 to-transparent" />
+                                                    <div className="absolute inset-0 " />
 
                                                     <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-xs font-black uppercase text-[#071d78] shadow-lg backdrop-blur">
                                                         <span className="h-2 w-2 rounded-full bg-[#ffcc00]" />
                                                         {product.presentations.length} presentaciones
                                                     </div>
 
-                                                    <div className="absolute bottom-5 left-5 right-5">
-                                                        <h3 className="text-2xl font-black leading-tight text-white">
+                                                    <div className="absolute bottom-2 left-2">
+                                                        <h3 className=" font-black leading-tight text-white">
                                                             {product.name}
                                                         </h3>
                                                     </div>
@@ -213,22 +214,6 @@ export default function LineDetailPage() {
                                                         {product.description}
                                                     </p>
 
-                                                    {/* <div className="mt-5 flex flex-wrap gap-2">
-                                                        {colors.slice(0, 5).map((color) => (
-                                                            <span
-                                                                key={color.id}
-                                                                className="h-6 w-6 rounded-full border border-black/10 shadow-sm"
-                                                                style={{ backgroundColor: color.value }}
-                                                                title={color.name || color.value}
-                                                            />
-                                                        ))}
-
-                                                        {colors.length > 5 && (
-                                                            <span className="flex h-6 items-center rounded-full bg-[#071d78]/8 px-2 text-xs font-black text-[#071d78]">
-                                                                +{colors.length - 5}
-                                                            </span>
-                                                        )}
-                                                    </div> */}
 
                                                     <div className="mt-6 flex items-center justify-between border-t border-[#061540]/10 pt-5">
                                                         <div className="flex items-center gap-3">
@@ -251,6 +236,7 @@ export default function LineDetailPage() {
                     </>
                 )}
             </div>
+            <PvcRecommendationsSlider />
             <Footer />
         </main>
     );

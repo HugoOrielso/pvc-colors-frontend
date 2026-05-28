@@ -24,6 +24,7 @@ import { ColorGroupModal } from "../inventory/ColorGroupModal";
 import { ProductCalculatorModal } from "./calculatorModal";
 import { useCartStore } from "@/store/cart-store";
 import { toast } from "sonner";
+import PvcRecommendationsSlider from "../lines/Recomendations";
 
 interface ProductDetailPageProps {
   id: string;
@@ -137,7 +138,7 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
 
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-[#f4f5f9]">
+      <div className="min-h-screen bg-[#f4f5f9]">
         <Header />
         <section className="mx-auto max-w-7xl px-5 py-12">
           <div className="grid gap-8 lg:grid-cols-2">
@@ -146,7 +147,7 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
           </div>
         </section>
         <Footer />
-      </main>
+      </div>
     );
   }
 
@@ -285,7 +286,7 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
   };
 
   return (
-    <main className="grid min-h-screen grid-rows-[auto_1fr_auto] bg-[#f4f5f9]">
+    <div className="grid min-h-screen grid-rows-[auto_1fr_auto] bg-[#f4f5f9]">
       <Header />
 
       <div>
@@ -606,7 +607,7 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
           </section>
         )}
       </div>
-
+      <PvcRecommendationsSlider />
       <Footer />
 
       {isCalculatorOpen && (
@@ -626,6 +627,6 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
           onClose={() => setOpenGroupId(null)}
         />
       )}
-    </main>
+    </div>
   );
 }

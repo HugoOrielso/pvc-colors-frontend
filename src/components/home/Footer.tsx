@@ -23,7 +23,16 @@ const socialLinks = [
   {
     label: "Instagram",
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
         <circle cx="12" cy="12" r="4" />
         <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
@@ -41,21 +50,39 @@ const socialLinks = [
     ),
     href: "https://wa.me/573208731923",
   },
-]
-
+];
 
 const contactInfo = [
   {
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z" /><circle cx="12" cy="10" r="3" />
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z" />
+        <circle cx="12" cy="10" r="3" />
       </svg>
     ),
     text: "Calle 11 # 9-29 barrio El llano, Cúcuta - Norte de Santander",
   },
   {
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41a2 2 0 0 1 1.993-2.18h3A2 2 0 0 1 8.6 2.98l.917 4.585a2 2 0 0 1-.45 1.67L7.28 10.53a16 16 0 0 0 6.19 6.19l1.278-1.788a2 2 0 0 1 1.67-.45L20.98 15.4a2 2 0 0 1 1.74 1.76z" />
       </svg>
     ),
@@ -63,47 +90,53 @@ const contactInfo = [
   },
   {
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" />
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+        <polyline points="22,6 12,13 2,6" />
       </svg>
     ),
     text: "pvcolors19@gmail.com",
   },
-]
+];
 
 export const Footer = () => {
   return (
-    <footer className="bg-[#0a0f2e] text-white/60">
-
-      {/* Top accent strip */}
+    <footer className="border-t border-slate-200 bg-white text-slate-600">
       <div
         className="h-1 w-full"
         style={{
-          background: "linear-gradient(90deg, #08206b, #7ec8e3, #f5c518, #e84393, #08206b)",
+          background:
+            "linear-gradient(90deg, #08206b, #7ec8e3, #f5c518, #e84393, #08206b)",
         }}
       />
 
       <div className="mx-auto max-w-6xl px-6">
-
-        {/* Main content */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 py-14">
-
-          {/* Brand col */}
+        <div className="grid grid-cols-1 gap-12 py-14 md:grid-cols-3">
           <div>
-            <div className="flex items-center gap-3 mb-5">
+            <div className="mb-5 flex items-center gap-3">
               <Image
                 src="/assets/logo.webp"
                 alt="PVC Color's"
-                width={100}
+                width={110}
                 height={70}
-                className="object-contain"
+                className="h-auto w-27.5 object-contain"
               />
             </div>
-            <p className="text-[13px] leading-relaxed text-white/45 max-w-55 mb-6">
-              Pinturas y recubrimientos especializados para Colombia. Calidad, color y confianza desde Cúcuta.
+
+            <p className="mb-6 max-w-60 text-[14px] leading-relaxed text-slate-500">
+              Pinturas y recubrimientos especializados para Colombia. Calidad,
+              color y confianza desde Cúcuta.
             </p>
 
-            {/* Social icons */}
             <div className="flex gap-2">
               {socialLinks.map((s) => (
                 <Link
@@ -112,7 +145,7 @@ export const Footer = () => {
                   aria-label={s.label}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:bg-[#7ec8e3] hover:text-[#08206b] hover:border-[#7ec8e3] transition-all duration-200"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-[#08206b] transition-all duration-200 hover:border-[#f5c518] hover:bg-[#f5c518] hover:text-[#061540]"
                 >
                   {s.icon}
                 </Link>
@@ -120,19 +153,19 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Nav col */}
           <div>
-            <h3 className="text-[11px] font-bold text-white tracking-[0.12em] uppercase mb-5">
+            <h3 className="mb-5 text-[12px] font-extrabold uppercase tracking-[0.14em] text-[#061540]">
               Navegación
             </h3>
+
             <ul className="flex flex-col gap-3">
               {navLinks.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-[14px] text-white/45 hover:text-[#7ec8e3] transition-colors duration-200 flex items-center gap-2 group"
+                    className="group flex items-center gap-2 text-[14px] font-medium text-slate-500 transition-colors duration-200 hover:text-[#061540]"
                   >
-                    <span className="block w-0 group-hover:w-3 h-px bg-[#7ec8e3] transition-all duration-200" />
+                    <span className="h-px w-0 bg-[#f5c518] transition-all duration-200 group-hover:w-3" />
                     {link.label}
                   </Link>
                 </li>
@@ -140,30 +173,35 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact col */}
           <div>
-            <h3 className="text-[11px] font-bold text-white tracking-[0.12em] uppercase mb-5">
+            <h3 className="mb-5 text-[12px] font-extrabold uppercase tracking-[0.14em] text-[#061540]">
               Contáctanos
             </h3>
 
             <div className="flex flex-col gap-4">
               {contactInfo.map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <div className="shrink-0 mt-0.5 text-[#7ec8e3]">{item.icon}</div>
-                  <span className="text-[13px] text-white/45 leading-relaxed">{item.text}</span>
+                  <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#08206b]/5 text-[#08206b]">
+                    {item.icon}
+                  </div>
+
+                  <span className="text-[14px] leading-relaxed text-slate-500">
+                    {item.text}
+                  </span>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-white/[0.07] py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-[12px] text-white/25">
-            © {new Date().getFullYear()} PVC Color&apos;s · Todos los derechos reservados
+        <div className="flex flex-col items-center justify-between gap-3 border-t border-slate-200 py-5 sm:flex-row">
+          <p className="text-[12px] text-slate-400">
+            © {new Date().getFullYear()} PVC Color&apos;s · Todos los derechos
+            reservados
           </p>
-          <div className="flex items-center gap-2 text-[12px] text-white/25">
-            <span className="w-2 h-2 rounded-full bg-[#4caf50]" />
+
+          <div className="flex items-center gap-2 text-[12px] font-medium text-slate-400">
+            <span className="h-2 w-2 rounded-full bg-[#4caf50]" />
             Cúcuta, Colombia 🇨🇴
           </div>
         </div>

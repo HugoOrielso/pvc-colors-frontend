@@ -242,19 +242,6 @@ export default function CreateProductForm() {
     setTechnicalSheetPreview(URL.createObjectURL(file));
   }
 
-  function updateColor(index: number, key: keyof ColorForm, value: string) {
-    setColors((prev) =>
-      prev.map((item, i) => (i === index ? { ...item, [key]: value } : item))
-    );
-  }
-
-  function addColor() {
-    setColors((prev) => [...prev, { name: "", value: "" }]);
-  }
-
-  function removeColor(index: number) {
-    setColors((prev) => prev.filter((_, i) => i !== index));
-  }
 
   function updatePresentation(
     index: number,
@@ -636,63 +623,6 @@ export default function CreateProductForm() {
           )}
         </div>
 
-        <div className="rounded-xl border p-4">
-          <div className="mb-3 flex items-center justify-between">
-            <h3 className="font-semibold text-blue-700">Colores</h3>
-
-            <button
-              type="button"
-              onClick={addColor}
-              className="cursor-pointer rounded-lg bg-blue-700 px-3 py-2 text-xs font-semibold text-white"
-            >
-              Agregar color
-            </button>
-          </div>
-
-          <div className="space-y-3">
-            {colors.map((color, index) => (
-              <div
-                key={index}
-                className="grid gap-3 md:grid-cols-[1fr_160px_48px_auto]"
-              >
-                <input
-                  value={color.name}
-                  onChange={(e) => updateColor(index, "name", e.target.value)}
-                  placeholder="Nombre del color"
-                  className="h-11 rounded-xl border px-4 text-sm outline-none"
-                />
-
-                <div className="flex h-11 items-center gap-2 rounded-xl border px-3">
-                  <input
-                    type="color"
-                    value={color.value || "#000000"}
-                    onChange={(e) => updateColor(index, "value", e.target.value)}
-                    className="h-8 w-10 cursor-pointer rounded border-none bg-transparent p-0"
-                  />
-
-                  <span className="text-xs font-medium text-slate-600">
-                    {color.value || "#000000"}
-                  </span>
-                </div>
-
-                <div
-                  className="h-11 rounded-xl border"
-                  style={{
-                    backgroundColor: color.value || "#000000",
-                  }}
-                />
-
-                <button
-                  type="button"
-                  onClick={() => removeColor(index)}
-                  className="cursor-pointer rounded-xl border px-4 text-sm hover:bg-slate-50"
-                >
-                  Quitar
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
 
         <div className="rounded-xl border p-4">
           <div className="mb-3 flex items-center justify-between">

@@ -177,11 +177,7 @@ export default function UpdateProductForm() {
     }, [product]);
 
     const hasSimpleColors = colors.some((color) => color.value.trim());
-    const hasColorGroups = colorGroups.some(
-        (group) =>
-            group.name.trim() ||
-            group.colors.some((color) => color.value.trim())
-    );
+
 
     const isFormValid = useMemo(() => {
         return (
@@ -227,24 +223,6 @@ export default function UpdateProductForm() {
         setTechnicalSheetPreview(URL.createObjectURL(file));
     }
 
-    function addColor() {
-        if (hasColorGroups) {
-            toast.error("No puedes usar colores simples y grupos de colores al mismo tiempo");
-            return;
-        }
-
-        setColors((prev) => [...prev, { name: "", value: "" }]);
-    }
-
-    function updateColor(index: number, key: keyof ColorForm, value: string) {
-        setColors((prev) =>
-            prev.map((item, i) => (i === index ? { ...item, [key]: value } : item))
-        );
-    }
-
-    function removeColor(index: number) {
-        setColors((prev) => prev.filter((_, i) => i !== index));
-    }
 
     function addColorGroup() {
         if (hasSimpleColors) {
@@ -678,69 +656,69 @@ export default function UpdateProductForm() {
                     )}
                 </div>
 
-                <div className="rounded-xl border p-4">
-                    <div className="mb-3 flex items-center justify-between">
-                        <div>
-                            <h3 className="font-semibold text-blue-700">Colores simples</h3>
-                            <p className="text-xs text-slate-500">
-                                Usa esta opción solo si el producto no maneja grupos de colores.
-                            </p>
+                    {/* <div className="rounded-xl border p-4">
+                        <div className="mb-3 flex items-center justify-between">
+                            <div>
+                                <h3 className="font-semibold text-blue-700">Colores simples</h3>
+                                <p className="text-xs text-slate-500">
+                                    Usa esta opción solo si el producto no maneja grupos de colores.
+                                </p>
+                            </div>
+
+                            <button
+                                type="button"
+                                onClick={addColor}
+                                disabled={hasColorGroups}
+                                className="cursor-pointer rounded-lg bg-blue-700 px-3 py-2 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+                            >
+                                Agregar color
+                            </button>
                         </div>
 
-                        <button
-                            type="button"
-                            onClick={addColor}
-                            disabled={hasColorGroups}
-                            className="cursor-pointer rounded-lg bg-blue-700 px-3 py-2 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
-                        >
-                            Agregar color
-                        </button>
-                    </div>
-
-                    <div className="space-y-3">
-                        {colors.map((color, index) => (
-                            <div
-                                key={index}
-                                className="grid gap-3 md:grid-cols-[1fr_160px_48px_auto]"
-                            >
-                                <input
-                                    value={color.name}
-                                    onChange={(e) => updateColor(index, "name", e.target.value)}
-                                    placeholder="Nombre del color"
-                                    disabled={hasColorGroups}
-                                    className="h-11 rounded-xl border px-4 text-sm outline-none disabled:bg-slate-100"
-                                />
-
-                                <div className="flex h-11 items-center gap-2 rounded-xl border px-3">
+                        <div className="space-y-3">
+                            {colors.map((color, index) => (
+                                <div
+                                    key={index}
+                                    className="grid gap-3 md:grid-cols-[1fr_160px_48px_auto]"
+                                >
                                     <input
-                                        type="color"
-                                        value={color.value || "#000000"}
-                                        onChange={(e) => updateColor(index, "value", e.target.value)}
+                                        value={color.name}
+                                        onChange={(e) => updateColor(index, "name", e.target.value)}
+                                        placeholder="Nombre del color"
                                         disabled={hasColorGroups}
-                                        className="h-8 w-10 cursor-pointer rounded border-none bg-transparent p-0 disabled:cursor-not-allowed"
+                                        className="h-11 rounded-xl border px-4 text-sm outline-none disabled:bg-slate-100"
                                     />
 
-                                    <span className="text-xs font-medium text-slate-600">
-                                        {color.value || "#000000"}
-                                    </span>
+                                    <div className="flex h-11 items-center gap-2 rounded-xl border px-3">
+                                        <input
+                                            type="color"
+                                            value={color.value || "#000000"}
+                                            onChange={(e) => updateColor(index, "value", e.target.value)}
+                                            disabled={hasColorGroups}
+                                            className="h-8 w-10 cursor-pointer rounded border-none bg-transparent p-0 disabled:cursor-not-allowed"
+                                        />
+
+                                        <span className="text-xs font-medium text-slate-600">
+                                            {color.value || "#000000"}
+                                        </span>
+                                    </div>
+
+                                    <div
+                                        className="h-11 rounded-xl border"
+                                        style={{ backgroundColor: color.value || "#000000" }}
+                                    />
+
+                                    <button
+                                        type="button"
+                                        onClick={() => removeColor(index)}
+                                        className="cursor-pointer rounded-xl border px-4 text-sm hover:bg-slate-50"
+                                    >
+                                        Quitar
+                                    </button>
                                 </div>
-
-                                <div
-                                    className="h-11 rounded-xl border"
-                                    style={{ backgroundColor: color.value || "#000000" }}
-                                />
-
-                                <button
-                                    type="button"
-                                    onClick={() => removeColor(index)}
-                                    className="cursor-pointer rounded-xl border px-4 text-sm hover:bg-slate-50"
-                                >
-                                    Quitar
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+                            ))}
+                        </div>
+                    </div> */}
 
                 <div className="rounded-xl border p-4">
                     <div className="mb-3 flex items-center justify-between">

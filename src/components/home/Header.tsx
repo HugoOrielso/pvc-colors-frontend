@@ -25,8 +25,10 @@ export const Header = () => {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <Link href="/" onClick={closeMenu} className="flex items-center gap-3">
-          <p>Tienda</p>
-          <Separator orientation="vertical" className=" bg-slate-300" />
+          <p className="font-semibold text-slate-700">Tienda</p>
+
+          <Separator orientation="vertical" className="bg-slate-300" />
+
           <Image
             src="/assets/logo.webp"
             alt="PVC Color's"
@@ -42,7 +44,7 @@ export const Header = () => {
             <Link
               key={item.label}
               href={item.href}
-              className="text-[13px] font-semibold tracking-wide  transition-colors duration-200 hover:text-[#08206b]"
+              className="relative text-[13px] font-semibold tracking-wide text-slate-700 transition-colors duration-200 hover:text-[#08206b]"
             >
               {item.label}
             </Link>
@@ -57,6 +59,7 @@ export const Header = () => {
             <Calculator size={16} />
             Calculadora
           </Link>
+
           <Link
             href="/login"
             className="inline-flex items-center gap-2 rounded-xl border border-[#08206b]/15 bg-white px-5 py-2.5 text-[13px] font-bold text-[#08206b] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#08206b] hover:bg-[#f8fafc] hover:shadow-lg"
@@ -69,50 +72,77 @@ export const Header = () => {
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
-          className="inline-flex items-center justify-center rounded-xl p-2 text-[#08206b] transition-colors hover:bg-slate-100 lg:hidden"
+          className="inline-flex items-center justify-center rounded-xl p-2 text-[#08206b] transition-all duration-200 hover:bg-slate-100 active:scale-95 lg:hidden"
           aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
           aria-expanded={isOpen}
         >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
+          <div className="transition-transform duration-300">
+            {isOpen ? (
+              <X size={24} className="rotate-90 transition-transform duration-300" />
+            ) : (
+              <Menu size={24} className="transition-transform duration-300" />
+            )}
+          </div>
         </button>
       </div>
 
-      {isOpen && (
-        <div className="border-t border-slate-100 bg-white px-4 py-4 shadow-lg lg:hidden">
-          <nav className="mx-auto flex max-w-7xl flex-col gap-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                onClick={closeMenu}
-                className="rounded-xl px-4 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-[#08206b]"
-              >
-                {item.label}
-              </Link>
-            ))}
+      {/* MOBILE MENU */}
+      <div
+        className={`overflow-hidden border-t border-slate-100 bg-white shadow-lg transition-all duration-300 ease-out lg:hidden ${
+          isOpen
+            ? "max-h-105 opacity-100 translate-y-0"
+            : "max-h-0 opacity-0 -translate-y-2"
+        }`}
+      >
+        <nav className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-4">
+          {navItems.map((item, index) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              onClick={closeMenu}
+              className={`rounded-xl px-4 py-3 text-sm font-semibold text-slate-600 transition-all duration-300 hover:bg-slate-50 hover:text-[#08206b] ${
+                isOpen
+                  ? "translate-x-0 opacity-100"
+                  : "-translate-x-4 opacity-0"
+              }`}
+              style={{
+                transitionDelay: `${index * 70}ms`,
+              }}
+            >
+              {item.label}
+            </Link>
+          ))}
 
-            <div className="mt-3 grid gap-3 border-t border-slate-100 pt-4 ">
-              <Link
-                href="/calculator"
-                onClick={closeMenu}
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#08206b]/15 bg-white px-5 py-3 text-sm font-bold text-[#08206b] transition hover:border-[#08206b] hover:bg-slate-50"
-              >
-                <Calculator size={16} />
-                Calculadora
-              </Link>
+          <div
+            className={`mt-3 grid gap-3 border-t border-slate-100 pt-4 transition-all duration-300 ${
+              isOpen
+                ? "translate-y-0 opacity-100"
+                : "translate-y-3 opacity-0"
+            }`}
+            style={{
+              transitionDelay: "250ms",
+            }}
+          >
+            <Link
+              href="/calculator"
+              onClick={closeMenu}
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#08206b]/15 bg-white px-5 py-3 text-sm font-bold text-[#08206b] transition-all duration-200 hover:border-[#08206b] hover:bg-slate-50 active:scale-[0.98]"
+            >
+              <Calculator size={16} />
+              Calculadora
+            </Link>
 
-              <Link
-                href="/login"
-                onClick={closeMenu}
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#08206b]/15 bg-white px-5 py-3 text-sm font-bold text-[#08206b] transition hover:border-[#08206b] hover:bg-slate-50"
-              >
-                <MonitorCog size={16} />
-                Portal administrativo
-              </Link>
-            </div>
-          </nav>
-        </div>
-      )}
+            <Link
+              href="/login"
+              onClick={closeMenu}
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#08206b]/15 bg-white px-5 py-3 text-sm font-bold text-[#08206b] transition-all duration-200 hover:border-[#08206b] hover:bg-slate-50 active:scale-[0.98]"
+            >
+              <MonitorCog size={16} />
+              Portal administrativo
+            </Link>
+          </div>
+        </nav>
+      </div>
 
       <div
         className="h-0.75 w-full"

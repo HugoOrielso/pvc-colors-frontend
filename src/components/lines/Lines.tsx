@@ -9,6 +9,7 @@ import { Header } from "@/components/home/Header";
 import { Footer } from "@/components/home/Footer";
 import { useProductLinesPublic } from "@/hooks/public/lines/usePublicLines";
 import EmptyLinesAnimation from "@/components/lines/LottieLineAnimation";
+import PvcRecommendationsSlider from "./Recomendations";
 
 export function Lines() {
   const { data, isLoading } = useProductLinesPublic();
@@ -18,7 +19,7 @@ export function Lines() {
     <div className="grid grid-rows-[auto_1fr_auto] min-h-screen">
       <Header />
 
-      <main className="overflow-hidden bg-white text-[#061540]">
+      <main className="overflow-hidden bg-white text-[#061540] ">
         <section className="relative overflow-hidden bg-[#061540] px-4 py-16 text-white sm:px-6 lg:px-12 lg:py-20">
           <div className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-blue-700/20 blur-3xl" />
           <div className="pointer-events-none absolute right-0 top-0 h-96 w-96 rounded-full bg-blue-500/10 blur-3xl" />
@@ -234,6 +235,9 @@ export function Lines() {
             )}
           </div>
         </section>
+        <div className="border-t border-slate-100 bg-slate-50/40">
+          <PvcRecommendationsSlider />
+        </div>
       </main>
 
       <Footer />
