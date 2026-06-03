@@ -45,7 +45,7 @@ export function FloatingCart() {
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50">
+        <div className="fixed inset-0 z-9999">
           <button
             type="button"
             onClick={closeCart}
@@ -79,7 +79,7 @@ export function FloatingCart() {
               </div>
             ) : (
               <>
-                <div className="flex-1 overflow-y-auto px-5 py-4">
+                <div className="flex-1 overflow-y-auto px-5 py-4 ">
                   <div className="space-y-4">
                     {cart.map((item) => (
                       <div
